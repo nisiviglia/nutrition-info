@@ -13,41 +13,54 @@
 
 package com.siviglia.web.nutritioninfo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name= "serving_size") 
 class ServingSize {
 
     @Id
-    @Column(name="NDB_No")
-    private int ndbNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="serving_id")
+    private int servingId;
 
-    @Column(name="Serving_Size")
+    @Column(name="serving_size")
     private String ServingSize;
 
-    @Column(name="Serving_Size_UOM")
+    @Column(name="serving_size_uom")
     private String servingSizeUOM;
 
-    @Column(name="Household_Serving_Size")
+    @Column(name="household_serving_size")
     private String householdServingSize;
 
-    @Column(name="Household_Serving_Size_UOM")
+    @Column(name="household_serving_size_uom")
     private String householdServingSizeUOM;
 
-    @Column(name="Preparation_State")
+    @Column(name="preparation_state")
     private String preparationState;
 
-    public int getNDBNo(){
-        return ndbNo;
+    @OneToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name= "ndb_number")
+    private Products products;
+
+    @JsonIgnore
+    public int getServingId(){
+        return servingId;
     }
 
-    public void setNDBNo(int ndbNo){
-        this.ndbNo = ndbNo;
+    public void setServingId(int servingId){
+        this.servingId = servingId;
     }
 
     public String getServingSize(){
@@ -88,5 +101,14 @@ class ServingSize {
 
     public void setPreparationState(String preparationState){
         this.preparationState = preparationState;
+    }
+
+    @JsonIgnore
+    public Products getProducts(){
+        return products;
+    }
+
+    public void setProducts(Products products){
+        this.products = products;
     }
 }

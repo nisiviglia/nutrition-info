@@ -13,41 +13,54 @@
 
 package com.siviglia.web.nutritioninfo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name= "nutrients") 
-class Nutrients {
+public class Nutrients{
     
-    @Id
-    @Column(name="NDB_No")
-    private int ndbNo;
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="nutrient_id")
+    private long nutrientId;
 
-    @Column(name="Nutrient_Code")
+    @Column(name="nutrient_code")
     private int nutrientCode;
 
-    @Column(name="Nutrient_Name")
+    @Column(name="nutrient_name")
     private String nutrientName;
 
-    @Column(name="Derivation_Code")
+    @Column(name="derivation_code")
     private String derivationCode;
 
-    @Column(name="Output_Value")
+    @Column(name="output_value")
     private float outputValue;
 
-    @Column(name="Output_UOM")
+    @Column(name="output_uom")
     private String outputUOM;
-    
-    public int getNDBNo(){
-        return ndbNo;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name= "ndb_number")
+    private Products products;
+
+    @JsonIgnore
+    public long getNutrientId(){
+        return nutrientId;
     }
 
-    public void setNDBNo(int ndbNo){
-        this.ndbNo = ndbNo;
+    public void setNutrientId(long nutrientId){
+        this.nutrientId = nutrientId; 
     }
 
     public int getNutrientCode(){
@@ -89,4 +102,14 @@ class Nutrients {
     public void setOutputUOM(String outputUOM){
         this.outputUOM = outputUOM;
     }
+
+    @JsonIgnore
+    public Products getProducts(){
+        return products;
+    }
+
+    public void setProducts(Products products){
+        this.products = products;
+    }
+
 }

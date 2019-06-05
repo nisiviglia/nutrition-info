@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2017 Netgloo info@netgloo.com 
+ * netgloo/spring-boot-samples is licensed under the MIT Licence.
+ * 
+ * The source copy can be found here:
+ * https://github.com/netgloo/spring-boot-samples/blob/master/spring-boot-hibernate-search/src/main/java/netgloo/BuildSearchIndex.java
+**/
 package com.siviglia.web.nutritioninfo;
 
 import javax.persistence.EntityManager;

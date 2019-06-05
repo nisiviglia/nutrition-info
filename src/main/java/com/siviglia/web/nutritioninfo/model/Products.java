@@ -18,14 +18,17 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Store;
-import org.hibernate.search.annotations.DocumentId;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.FetchType;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Indexed
@@ -33,8 +36,7 @@ import java.util.Date;
 public class Products {
     
     @Id
-    @DocumentId
-    @Column(name="NDB_Number")
+    @Column(name="ndb_number")
     private int ndbNumber;
 
     @Column(name="long_name")
@@ -56,8 +58,14 @@ public class Products {
     @Column(name="date_available")
     private Date dateAvailable;
 
-    @Column(name="ingredients_english")
+    @Column(name="ingredients_english", columnDefinition="MEDIUMTEXT")
     private String ingredientsEnglish;
+
+    @OneToMany(mappedBy= "products", fetch= FetchType.LAZY)
+    private List<Nutrients> nutrients;
+
+    @OneToOne(mappedBy= "products", fetch= FetchType.LAZY)
+    private ServingSize servingSize;
 
     public int getNDBNumber(){
         return ndbNumber;
@@ -121,5 +129,21 @@ public class Products {
 
     public void setIngredientsEnglish(String ingredientsEnglish){
         this.ingredientsEnglish = ingredientsEnglish;
+    }
+
+    public List<Nutrients> getNutrients(){
+        return nutrients;
+    }
+
+    public void setNutrients(List<Nutrients> nutrients){
+        this.nutrients = nutrients;
+    }
+
+    public ServingSize getServingSize(){
+        return servingSize;
+    }
+
+    public void setServingSize(ServingSize servingSize){
+        this.servingSize = servingSize;
     }
 }
