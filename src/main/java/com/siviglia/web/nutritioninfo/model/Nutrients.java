@@ -63,6 +63,7 @@ public class Nutrients{
         this.nutrientId = nutrientId; 
     }
 
+    @JsonIgnore
     public int getNutrientCode(){
         return nutrientCode;
     }

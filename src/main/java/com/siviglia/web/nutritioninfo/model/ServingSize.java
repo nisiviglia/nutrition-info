@@ -79,6 +79,7 @@ class ServingSize {
         this.servingSizeUOM = servingSizeUOM;
     }
 
+    @JsonIgnore
     public String getHouseholdServingSize(){
         return householdServingSize;
     }
@@ -87,6 +88,7 @@ class ServingSize {
         this.householdServingSize = householdServingSize;
     }
 
+    @JsonIgnore
     public String getHouseholdServingSizeUOM(){
         return householdServingSizeUOM;
     }
@@ -95,6 +97,7 @@ class ServingSize {
         this.householdServingSizeUOM = householdServingSizeUOM;
     }
 
+    @JsonIgnore
     public String getPreparationState(){
         return preparationState;
     }

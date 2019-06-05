@@ -13,6 +13,8 @@
 
 package com.siviglia.web.nutritioninfo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -83,6 +85,7 @@ public class Products {
         this.longName = longName;
     }
 
+    @JsonIgnore
     public String getDataSource(){
         return dataSource;
     }
@@ -107,6 +110,7 @@ public class Products {
         this.manufacturer = manufacturer;
     }
 
+    @JsonIgnore
     public Date getDateModified(){
         return dateModified;
     }
@@ -115,6 +119,7 @@ public class Products {
         this.dateModified = dateModified;
     }
 
+    @JsonIgnore
     public Date getDateAvailable(){
         return dateAvailable;
     }
