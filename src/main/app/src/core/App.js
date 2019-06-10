@@ -6,7 +6,7 @@ import Search from '../search/Search'
 
 function App() {
   return (
-    <div class="app">
+    <div className="app">
       <Header />
       <Search />
       <Footer />
