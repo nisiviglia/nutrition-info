@@ -1,8 +1,11 @@
 import React from 'react';
 import './ProductsCard.css';
+import { Link } from 'react-router-dom';
 
 const ProductsCard = props => (
-    <div className="product-card">
+    <Link 
+        to={"/product/" + props.ndbnumber} 
+        className="product-card">
         <div className="product-card-title">
             <h4>{props.longName}</h4>
             <p>{props.manufacturer}</p>
@@ -25,7 +28,7 @@ const ProductsCard = props => (
                 <h4>{props.cal}</h4>
             </div>
         </div>
-    </div>
+    </Link>
 );
 
 export default ProductsCard;

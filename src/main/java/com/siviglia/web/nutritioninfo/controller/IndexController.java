@@ -17,14 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.siviglia.web.nutritioninfo.model.Products;
 import com.siviglia.web.nutritioninfo.repository.ProductSearchService;
+import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
+import com.siviglia.web.nutritioninfo.exception.NotFoundException;
 
 @RestController
 class IndexController{
@@ -32,12 +37,54 @@ class IndexController{
     @Autowired
     private ProductSearchService productSearchService;
 
+    @Autowired
+    private ProductsRepository productsRepository;
+
     @CrossOrigin
     @RequestMapping(value= "/api/v1/search/name/{name}",
         method= RequestMethod.GET,
         produces= "application/json")
-    public @ResponseBody List<Products> search(@PathVariable() String name){
+    public @ResponseBody Map<String, Object> search(
+            @PathVariable() String name,
+            @RequestParam(name= "first_result", defaultValue="0") int firstResult,
+            @RequestParam(name= "max_results", defaultValue="20") int maxResults){
+
+        //Keep max results less than 100.
+        if(maxResults > 100){
+            maxResults = 100;
+        }
         
-        return productSearchService.searchProductsByKeywordQuery(name);
+        //Grab search results
+        List<Products> products = 
+            productSearchService.searchProductsByKeywordQuery(
+                    name, maxResults, firstResult);
+
+        //Create json results
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search_query", name);
+        map.put("total_results", 
+                productSearchService.getResulSizeOfLongNameQuery(name));
+        map.put("max_results", maxResults);
+        map.put("returned_results", products.size() );
+        map.put("first_result", firstResult);
+        map.put("products", products);
+
+        return map;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value= "/api/v1/product/ndbnumber/{ndbNumber}",
+        method= RequestMethod.GET,
+        produces= "application/json")
+    public @ResponseBody Products getProduct(@PathVariable() int ndbNumber){
+        
+        Products product = productsRepository
+            .findById( ndbNumber )
+            .orElseThrow( NotFoundException::new );
+
+        return product;
     }
 }
+
+
+

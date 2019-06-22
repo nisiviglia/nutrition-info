@@ -36,7 +36,8 @@ public class ProductSearchService {
     private EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
-    public List<Products> searchProductsByKeywordQuery(String text){
+    public List<Products> searchProductsByKeywordQuery(
+            String text, int maxResults, int firstResult){
         
         Query keywordQuery = getQueryBuilder()
             .keyword()
@@ -44,10 +45,25 @@ public class ProductSearchService {
             .matching(text)
             .createQuery();
 
-        List<Products> products = getJpaQuery(keywordQuery).getResultList();
+        List<Products> products = getJpaQuery(keywordQuery)
+            .setMaxResults(maxResults)
+            .setFirstResult(firstResult)
+            .getResultList();
+
         return products;
     }
-	
+    
+    public int getResulSizeOfLongNameQuery(String text){
+
+        Query keywordQuery = getQueryBuilder()
+            .keyword()
+            .onField("longName")
+            .matching(text)
+            .createQuery();
+        
+        return getJpaQuery(keywordQuery).getResultSize();
+    }
+
     private QueryBuilder getQueryBuilder() {
 
         FullTextEntityManager fullTextEntityManager = 

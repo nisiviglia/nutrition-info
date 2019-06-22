@@ -17,6 +17,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.siviglia.web.nutritioninfo.model.Products;
 
-public interface ProductsRepository extends JpaRepository<Products, Integer>{
+import java.util.Optional;
 
+public interface ProductsRepository extends JpaRepository<Products, Integer>{
+    
 }
