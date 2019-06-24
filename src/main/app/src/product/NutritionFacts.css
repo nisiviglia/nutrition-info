@@ -1,0 +1,35 @@
+
+.nutrition-facts-container {
+    width: 80%;
+    max-width: 500px;
+}
+
+.nutrition-facts-first {
+    border-bottom: 3px solid black;
+}
+
+.nutrition-facts-first h2{
+    text-align: center;
+}
+
+.nutrition-facts-second-nutrients {
+    border-bottom: 2px solid black;
+}
+
+tbody {
+    width: 100%;
+}
+
+table, tr{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+tr {
+    border-bottom: 1px solid black;
+}
+
+.tg-dailyvalue-bold {
+    font-weight: bold;
+}

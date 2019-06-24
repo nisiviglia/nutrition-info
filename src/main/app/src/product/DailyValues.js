@@ -5,12 +5,14 @@ module.exports = {
         {
             dbName: "Energy",
             displayName: "Calories",
-            dailyValue: 2000 
+            dailyValue: 2000,
+            bold: true
         },   
         {
             dbName: "Total lipid (fat)",
             displayName: "Total Fat",
-            dailyValue: 65
+            dailyValue: 65,
+            bold: true
         },
         {
             dbName: "Fatty acids, total saturated",
@@ -35,17 +37,26 @@ module.exports = {
         {
             dbName: "Cholesterol",
             displayName: "Cholesterol",
-            dailyValue: 300
+            dailyValue: 300,
+            bold: true
         },
         {
             dbName: "Sodium, Na",
             displayName: "Sodium",
-            dailyValue: 2400
+            dailyValue: 2400,
+            bold: true
+        },
+        {   
+            dbName: "Potassium, K",
+            displayName: "Potassium",
+            dailyValue: 3500,
+            bold: true
         },
         {
             dbName: "Carbohydrate, by difference",
             displayName: "Total Carbohydrate",
-            dailyValue: 300
+            dailyValue: 300,
+            bold: true
         },
         {
             dbName: "Fiber, total dietary",
@@ -70,7 +81,8 @@ module.exports = {
         {
             dbName: "Protein",
             displayName: "Protein",
-            dailyValue: 50
+            dailyValue: 50,
+            bold: true
         }
     ],
 

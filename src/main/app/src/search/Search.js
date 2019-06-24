@@ -81,7 +81,7 @@ class Search extends React.Component {
                             fat= {product["nutrients"].filter(n => n["nutrientName"] === "Total lipid (fat)")[0]["outputValue"]}
                             protien= {product["nutrients"].filter(n => n["nutrientName"] === "Protein")[0]["outputValue"]}
                             sodium= {product["nutrients"].filter(n => n["nutrientName"] === "Sodium, Na")[0]["outputValue"]}
-                            cal=  {product["nutrients"].filter(n => n["nutrientName"] === "Carbohydrate, by difference")[0]["outputValue"]}
+                            cal=  {product["nutrients"].filter(n => n["nutrientName"] === "Energy")[0]["outputValue"]}
                         />
                     )}
 

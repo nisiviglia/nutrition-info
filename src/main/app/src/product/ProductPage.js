@@ -8,6 +8,7 @@ class ProductPage extends React.Component {
     constructor(props){
         super(); 
         this.state = {
+            product: {}
         };
 
         this.handleLoadProduct(props.match.params.ndbNumber); 
@@ -26,7 +27,12 @@ class ProductPage extends React.Component {
     render() {
         return (
         <div className="product-page">
-            {this.state.product ? <NutritionFacts product={this.state.product}/> : <p>Loading...</p>}
+            <h1 id="product_name">{this.state.product.longName}</h1>
+            <p id="product_manufacturer">{this.state.product.manufacturer}</p>
+
+            {Object.keys(this.state.product).length ? 
+                <NutritionFacts product={this.state.product}/> 
+            : <p>Loading...</p>}
         </div>
         ); 
     }
