@@ -33,6 +33,7 @@ class ProductPage extends React.Component {
             {Object.keys(this.state.product).length ? 
                 <NutritionFacts product={this.state.product}/> 
             : <p>Loading...</p>}
+            <div className="disclaimer"><p><b>Disclaimer:</b> All information found on this website is for reference purposes only. Always double check the products label in person <b>before</b> purchase and consumption.</p></div>
         </div>
         ); 
     }

@@ -68,7 +68,9 @@ class Search extends React.Component {
             <div className="search-container">
                 <div className="searchbar" >
                     <input type="text" value={this.state.search_query} onChange={this.handleChange}/>
-                    <button type="button" onClick={this.handleSubmit}>Search</button>
+                    <button type="button" onClick={this.handleSubmit}>
+                        <img src="musica-searcher.svg" alt="Search"/>
+                    </button>
                 </div>
                 <div className="results-container">
                     {this.state.products.map(product => 

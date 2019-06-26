@@ -1,0 +1,28 @@
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 2.5em;
+    background-color: #5DBCD2;
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar-list-home {
+
+    text-decoration: none;
+}
+
+.nav-bar-list-home p {
+    color: black;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 3px;
+    font-size: large;
+}

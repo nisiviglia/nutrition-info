@@ -5,3 +5,23 @@
     align-items: center;
     width: 100%;
 }
+
+.product-page h1 {
+    margin-bottom: 0;
+}
+
+.product-page p {
+    margin-top: 0;
+}
+
+.disclaimer {
+    margin-top: 1%;
+    width: 55%;
+}
+
+@media screen and (max-width: 630px){
+
+    .disclaimer {
+        width: 75%;
+    }
+}
