@@ -77,9 +77,13 @@ class Search extends React.Component {
 
     getNutrientValue(name, product){
         let i = product.nutrients.findIndex(n => n.nutrientName === name);
-        let outputValue = product.nutrients[i].outputValue ? product.nutrients[i].outputValue : 0;
+        let outputValue = 0;
 
-        outputValue = (product.servingSize.servingSize / 100) * outputValue;
+        if(i !== -1){
+            outputValue = product.nutrients[i].outputValue;
+            outputValue = (product.servingSize.servingSize / 100) * outputValue;
+        }
+
         return outputValue.toFixed(0);
     }
 
