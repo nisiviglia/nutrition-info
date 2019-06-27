@@ -11,9 +11,7 @@ class Footer extends React.Component {
                 <p>{'\u2022'}</p>
                 <Link to="/terms"><p>Terms</p></Link>
                 <p>{'\u2022'}</p>
-                <Link to="/privacy"><p>Privacy</p></Link>
-                <p>{'\u2022'}</p>
-                <Link to="/about"><p>About</p></Link>
+                <p><a href="https://www.flaticon.com/authors/egor-rumyantsev"> Icons made by: Egor Rumyantsev</a></p>
             </div>
         );
     }

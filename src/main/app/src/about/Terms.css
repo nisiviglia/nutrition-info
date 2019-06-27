@@ -1,0 +1,7 @@
+
+.terms-container {
+    width: 75%; 
+    min-height: calc(100vh - 110px);
+    text-align: center;
+    margin-top: 2em;
+}

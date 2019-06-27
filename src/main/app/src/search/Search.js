@@ -21,6 +21,7 @@ class Search extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleLoadMoreProducts = this.handleLoadMoreProducts.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +39,18 @@ class Search extends React.Component {
         this.setState({search_query: event.target.value});
     }
 
-    handleSubmit(event) {
+    handleKeyPress(e) {
+        if(e.key === "Enter"){
+            this.handleSubmit();
+        }
+    }
+
+    handleSubmit() {
+
+        if(this.state.search_query === ''){
+            return;
+        }
+
         api.searchLongName(this.state.search_query)
         .then(data => {
             this.setState({total_results: data['total_results']});
@@ -63,11 +75,19 @@ class Search extends React.Component {
         })
     }
 
+    getNutrientValue(name, product){
+        let i = product.nutrients.findIndex(n => n.nutrientName === name);
+        let outputValue = product.nutrients[i].outputValue ? product.nutrients[i].outputValue : 0;
+
+        outputValue = (product.servingSize.servingSize / 100) * outputValue;
+        return outputValue.toFixed(0);
+    }
+
     render() {
         return (
             <div className="search-container">
                 <div className="searchbar" >
-                    <input type="text" value={this.state.search_query} onChange={this.handleChange}/>
+                    <input type="text" value={this.state.search_query} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
                     <button type="button" onClick={this.handleSubmit}>
                         <img src="musica-searcher.svg" alt="Search"/>
                     </button>
@@ -80,10 +100,12 @@ class Search extends React.Component {
                             ndbnumber= {product['ndbnumber']}
                             longName= {product["longName"]}
                             manufacturer= {product["manufacturer"]}
-                            fat= {product["nutrients"].filter(n => n["nutrientName"] === "Total lipid (fat)")[0]["outputValue"]}
-                            protien= {product["nutrients"].filter(n => n["nutrientName"] === "Protein")[0]["outputValue"]}
-                            sodium= {product["nutrients"].filter(n => n["nutrientName"] === "Sodium, Na")[0]["outputValue"]}
-                            cal=  {product["nutrients"].filter(n => n["nutrientName"] === "Energy")[0]["outputValue"]}
+                            fat= {this.getNutrientValue("Total lipid (fat)", product)}
+                            protien= {this.getNutrientValue("Protein", product)}
+                            carb= {this.getNutrientValue("Carbohydrate, by difference", product)}
+                            cal=  {this.getNutrientValue("Energy", product)}
+                            servingSize= {product.servingSize.servingSize}
+                            servingSizeUOM= {product.servingSize.servingSizeUOM}
                         />
                     )}
 

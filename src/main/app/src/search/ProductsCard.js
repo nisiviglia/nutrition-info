@@ -20,12 +20,16 @@ const ProductsCard = props => (
                 <h4>{props.protien}</h4>
             </div>
             <div className="product-card-body-item">
-                <p>Sodium</p>
-                <h4>{props.sodium}</h4>
+                <p>Carbs</p>
+                <h4>{props.carb}</h4>
             </div>
             <div className="product-card-body-item">
-                <p>Cal</p>
+                <p>Calories</p>
                 <h4>{props.cal}</h4>
+            </div>
+            <div className="product-card-body-item">
+                <p>Serving Size</p>
+                <h4>{props.servingSize} {props.servingSizeUOM}</h4>
             </div>
         </div>
     </Link>
