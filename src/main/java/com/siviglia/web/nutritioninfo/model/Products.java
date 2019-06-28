@@ -52,6 +52,7 @@ public class Products {
     private String gtinUPC;
 
     @Column(name="manufacturer")
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String manufacturer;
     
     @Column(name="date_modified")

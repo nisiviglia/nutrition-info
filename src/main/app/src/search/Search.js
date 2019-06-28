@@ -53,11 +53,16 @@ class Search extends React.Component {
 
         api.searchLongName(this.state.search_query)
         .then(data => {
-            this.setState({total_results: data['total_results']});
-            this.setState({max_results: data['max_results']});
-            this.setState({returned_results: data['returned_results']});
-            this.setState({first_result: data['first_result']});
-            this.setState({products: data['products']});
+            this.setState({total_results: data['total_results'] 
+                ? data['total_results'] : 0});
+            this.setState({max_results: data['max_results'] 
+                ? data['max_results'] : 0});
+            this.setState({returned_results: data['returned_results'] 
+                ? data['returned_results'] : 0});
+            this.setState({first_result: data['first_result'] 
+                ? data['first_result'] : 0});
+            this.setState({products: data['products'] 
+                ? data['products'] : []});
         })
         .catch(err => {
             console.log(err.message);

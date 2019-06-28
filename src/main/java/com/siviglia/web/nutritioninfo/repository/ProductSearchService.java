@@ -41,7 +41,7 @@ public class ProductSearchService {
         
         Query keywordQuery = getQueryBuilder()
             .keyword()
-            .onField("longName")
+            .onFields("longName", "manufacturer")
             .matching(text)
             .createQuery();
 
@@ -57,7 +57,7 @@ public class ProductSearchService {
 
         Query keywordQuery = getQueryBuilder()
             .keyword()
-            .onField("longName")
+            .onFields("longName", "manufacturer")
             .matching(text)
             .createQuery();
         
