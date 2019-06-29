@@ -6,8 +6,8 @@
 
   <groupId>com.siviglia.web.nutritioninfo</groupId>
   <artifactId>nutrition-info</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <version>0.9.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <name>nutrition-info</name>
   <!-- FIXME change it to the project's website -->
@@ -27,7 +27,7 @@
     <frontend-src-dir>${project.basedir}/src/main/app</frontend-src-dir>
     <node.version>v12.3.1</node.version>
     <yarn.version>v1.16.0</yarn.version>
-    <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
+    <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -75,7 +75,6 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
     <plugins>
 		<plugin>
 			<groupId>com.github.eirslett</groupId>
@@ -99,25 +98,39 @@
 					<goals>
 						<goal>yarn</goal>
 					</goals>
+					<phase>generate-resources</phase>
 					<configuration>
 						<arguments>install</arguments>
 					</configuration>
 				</execution>
-				<execution>
-					<id>build-frontend</id>
+<!--				<execution>
+					<id>yarn test</id>
 					<goals>
 						<goal>yarn</goal>
 					</goals>
-					<phase>prepare-package</phase>
+					<phase>test</phase>
+					<configuration>
+						<arguments>test</arguments>
+						<environmentVariables>
+							<CI>true</CI>
+						</environmentVariables>
+					</configuration>
+				</execution> -->
+				<execution>
+					<id>yarn-build</id>
+					<goals>
+						<goal>yarn</goal>
+					</goals>
+					<phase>compile</phase>
 					<configuration>
 						<arguments>build</arguments>
 					</configuration>
 				</execution>
-				</executions>
+			</executions>
 		</plugin>
 		<plugin>
 			<artifactId>maven-resources-plugin</artifactId>
-			<version>3.0.2</version>
+			<version>3.0.1</version>
 			<executions>
 				<execution>
 					<id>position-react-build</id>
@@ -176,6 +189,5 @@
           <version>3.0.0</version>
         </plugin>
       </plugins>
-    </pluginManagement>
   </build>
 </project>

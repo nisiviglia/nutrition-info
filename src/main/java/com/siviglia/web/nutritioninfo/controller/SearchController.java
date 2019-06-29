@@ -4,11 +4,11 @@
  * Proprietary and confidential.
 **/
 /**
- * @file IndexController.java
- * @brief main controller for this project.
+ * @file SearchController.java
+ * @brief controller that handles all search functions.
  * @author Nicholas Siviglia
  * @version 1.0
- * @date 2019-05-30
+ * @date 2019-06-28
  */
 
 package com.siviglia.web.nutritioninfo.Controller;
@@ -32,8 +32,8 @@ import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
 import com.siviglia.web.nutritioninfo.exception.NotFoundException;
 
 @RestController
-class IndexController{
-    
+class SearchController{
+
     @Autowired
     private ProductSearchService productSearchService;
 
@@ -84,7 +84,5 @@ class IndexController{
 
         return product;
     }
+
 }
-
-
-
