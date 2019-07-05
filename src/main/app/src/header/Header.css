@@ -18,6 +18,7 @@
 .nav-bar-list-home {
 
     text-decoration: none;
+    outline: none;
 }
 
 .nav-bar-list-home p {

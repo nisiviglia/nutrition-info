@@ -1,11 +1,12 @@
 import React from 'react';
 import './ProductsCard.css';
 import { Link } from 'react-router-dom';
+import getSlug from 'speakingurl';
 
 const ProductsCard = props => (
     <Link 
         to={"/product/" + props.ndbnumber + "/" 
-            + props.manufacturer + " " + props.longName} 
+            + getSlug(props.manufacturer + " " + props.longName)} 
         className="product-card">
         <div className="product-card-title">
             <h4>{props.longName}</h4>

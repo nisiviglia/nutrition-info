@@ -26,6 +26,7 @@
     outline: none;
     border: none;
     padding: 0 0 0 5px;
+    outline: none;
 }
 
 .searchbar button {
@@ -35,6 +36,7 @@
     padding: 0;
     border-radius: 0 4px 4px 0;
     background-color: rgba(0,0,0,0.06);
+    outline: none;
 }
 
 .searchbar button:hover {
