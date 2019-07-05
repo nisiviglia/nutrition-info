@@ -45,9 +45,6 @@ public class Products {
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String longName;
 
-    @Column(name="data_source")
-    private String dataSource;
-
     @Column(name="gtin_upc")
     private String gtinUPC;
 
@@ -64,11 +61,17 @@ public class Products {
     @Column(name="ingredients_english", columnDefinition="MEDIUMTEXT")
     private String ingredientsEnglish;
 
+    @Column(name="serving_size")
+    private String ServingSize;
+
+    @Column(name="serving_size_uom")
+    private String servingSizeUOM;
+
+    @Column(name="household_serving_size_fulltext")
+    private String householdServingSizeFulltext;
+
     @OneToMany(mappedBy= "products", fetch= FetchType.LAZY)
     private List<Nutrients> nutrients;
-
-    @OneToOne(mappedBy= "products", fetch= FetchType.LAZY)
-    private ServingSize servingSize;
 
     public int getNDBNumber(){
         return ndbNumber;
@@ -84,15 +87,6 @@ public class Products {
 
     public void setLongName(String longName){
         this.longName = longName;
-    }
-
-    @JsonIgnore
-    public String getDataSource(){
-        return dataSource;
-    }
-
-    public void ssetDataSource(String dataSource){
-        this.dataSource = dataSource;
     }
 
     public String getGtinUPC(){
@@ -137,19 +131,35 @@ public class Products {
         this.ingredientsEnglish = ingredientsEnglish;
     }
 
+    public String getServingSize(){
+        return ServingSize;
+    }
+
+    public void setServingSize(String ServingSize){
+        this.ServingSize = ServingSize;
+    }
+
+    public String getServingSizeUOM(){
+        return servingSizeUOM;
+    }
+
+    public void setServeringSizeUOM(String servingSizeUOM){
+        this.servingSizeUOM = servingSizeUOM;
+    }
+
+    public String getHouseholdServingSizeFulltext(){
+        return householdServingSizeFulltext;
+    }
+
+    public void setHouseholdServingSizeFulltext(String householdServingSizeFulltext){
+        this.householdServingSizeFulltext = householdServingSizeFulltext;
+    }
+
     public List<Nutrients> getNutrients(){
         return nutrients;
     }
 
     public void setNutrients(List<Nutrients> nutrients){
         this.nutrients = nutrients;
-    }
-
-    public ServingSize getServingSize(){
-        return servingSize;
-    }
-
-    public void setServingSize(ServingSize servingSize){
-        this.servingSize = servingSize;
     }
 }

@@ -18,6 +18,7 @@ class ProductPage extends React.Component {
         api.getProduct(ndbNumber)
         .then(data => {
             this.setState({product: data});
+            document.title = window.location.hostname + " \u2022 " + data.longName;
         })
         .catch(err => {
             console.log(err.message);

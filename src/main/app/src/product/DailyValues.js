@@ -74,7 +74,7 @@ module.exports = {
             dailyValue: -1
         },
         {
-            dbName: "Sugars, total",
+            dbName: "Sugars, total including NLEA",
             displayName: "Sugars",
             dailyValue: -1 
         },

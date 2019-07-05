@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 const ProductsCard = props => (
     <Link 
-        to={"/product/" + props.ndbnumber} 
+        to={"/product/" + props.ndbnumber + "/" 
+            + props.manufacturer + " " + props.longName} 
         className="product-card">
         <div className="product-card-title">
             <h4>{props.longName}</h4>

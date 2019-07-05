@@ -22,6 +22,7 @@ class Search extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleLoadMoreProducts = this.handleLoadMoreProducts.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        document.title = window.location.hostname;
     }
 
     componentDidMount() {
@@ -86,7 +87,7 @@ class Search extends React.Component {
 
         if(i !== -1){
             outputValue = product.nutrients[i].outputValue;
-            outputValue = (product.servingSize.servingSize / 100) * outputValue;
+            outputValue = (product.servingSize / 100) * outputValue;
         }
 
         return outputValue.toFixed(0);
@@ -113,8 +114,8 @@ class Search extends React.Component {
                             protien= {this.getNutrientValue("Protein", product)}
                             carb= {this.getNutrientValue("Carbohydrate, by difference", product)}
                             cal=  {this.getNutrientValue("Energy", product)}
-                            servingSize= {product.servingSize.servingSize}
-                            servingSizeUOM= {product.servingSize.servingSizeUOM}
+                            servingSize= {product.servingSize}
+                            servingSizeUOM= {product.servingSizeUOM}
                         />
                     )}
 

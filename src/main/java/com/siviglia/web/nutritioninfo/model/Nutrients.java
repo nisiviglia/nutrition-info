@@ -41,9 +41,6 @@ public class Nutrients{
     @Column(name="nutrient_name")
     private String nutrientName;
 
-    @Column(name="derivation_code")
-    private String derivationCode;
-
     @Column(name="output_value")
     private float outputValue;
 
@@ -80,14 +77,6 @@ public class Nutrients{
         this.nutrientName = nutrientName;
     }
 
-    public String getDerivationCode(){
-        return derivationCode;
-    }
-
-    public void setDerivationCode(String derivationCode){
-        this.derivationCode = derivationCode;
-    }
-    
     public float getOutputValue(){
         return outputValue;
     }
