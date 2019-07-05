@@ -18,10 +18,8 @@ const NutritionFacts = props => (
                     <div className="nutrition-facts-second-nutrients">
                         {dailyValues.nutrients.map(n => getNutrient(props.product.nutrients, n, props.product.servingSize))}
                     </div>
-                    <div className="nutrition-facts-second-vitamins">
                         {dailyValues.vitamins.map(v => getNutrient(props.product.nutrients, v, props.product.servingSize))}
                         {props.product.nutrients.map(v => getRemainingNutrient(v, props.product.servingSize))}
-                    </div>
                 </tbody>
 		    </table> 
         </div>

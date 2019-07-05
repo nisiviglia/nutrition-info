@@ -1,5 +1,10 @@
 
 module.exports = {
+    
+    type: {
+        nutrients:  "nutrients",
+        vitamins: "vitamins"
+    },
 
     nutrients:  [
         {

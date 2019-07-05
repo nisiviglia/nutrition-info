@@ -1,5 +1,9 @@
 
-var baseUrl = 'http://192.168.1.5:5000';
+//Add port 5000 to fetches if in development mode.
+var baseUrl = window.location.protocol + "//" + window.location.hostname;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    baseUrl = baseUrl + ":5000";
+}
 
 module.exports = {
 
