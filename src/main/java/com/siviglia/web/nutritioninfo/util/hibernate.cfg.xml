@@ -2,10 +2,13 @@
  
   <session-factory>
       <!-- Database connection settings -->
-      <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-      <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-      <property name="connection.url">jdbc:mysql://localhost:3306/nutrition_info2?serverTimezone=UTC</property>
-      <property name="connection.username">nutrition_info</property>
+      <!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+      <property name="connection.driver_class">com.mysql.jdbc.Driver</property> -->
+      <!-- <property name="connection.url">jdbc:mysql://localhost:3306/nutrition_info2?serverTimezone=UTC</property> -->
+      <!-- <property name="connection.username">nutrition_info</property> -->
+
+      <property name="connection.url">jdbc:h2:file:~/nutrition_info</property>
+      <property name="connection.username">sa</property>
       <property name="hibernate.hbm2ddl.auto">create</property>
 
       <!-- Enable Hibernate's automatic session context management -->

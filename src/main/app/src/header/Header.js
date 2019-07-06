@@ -13,8 +13,7 @@ class Header extends React.Component {
                             to={"/"} 
                             className="nav-bar-list-home" 
                             onClick={handleHomeButton}>
-                        <p>{window.location.hostname.charAt(0).toUpperCase() 
-                            + window.location.hostname.slice(1)}</p>
+                        <p>{window.location.hostname}</p>
                         </Link>
                     </li>
                 </ul>

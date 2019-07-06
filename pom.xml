@@ -7,11 +7,11 @@
   <groupId>com.siviglia.web.nutritioninfo</groupId>
   <artifactId>nutrition-info</artifactId>
   <version>0.9.9</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <name>nutrition-info</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>http://www.chowinfo.com</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -31,11 +31,13 @@
   </properties>
 
   <dependencies>
+      <!-- removed to build jar
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>2.1.6.RELEASE</version>
     </dependency>
+    -->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
@@ -45,7 +47,6 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-tomcat</artifactId>
 		<version>2.1.5.RELEASE</version>
-        <scope>provided</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
@@ -76,11 +77,6 @@
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
         <version>1.4.199</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.16</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
