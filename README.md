@@ -76,6 +76,13 @@ mvn package
     * `/var/lib/tomcat8`
   * Backend stdout log file is located in `/var/log/tomcat8/catalina.out`.
 
+## Deployment
+Make sure to change the homepage setting in the front-end's package.json file
+to match the production servers url.
+```
+"homepage": "192.168.1.5:8080/nutrient/"
+```
+
 ## Database Creation
 config files: 
 ```
