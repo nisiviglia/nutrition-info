@@ -6,7 +6,7 @@
 
   <groupId>com.siviglia.web.nutritioninfo</groupId>
   <artifactId>nutrition-info</artifactId>
-  <version>0.9.0-SNAPSHOT</version>
+  <version>0.9.9</version>
   <packaging>jar</packaging>
 
   <name>nutrition-info</name>
