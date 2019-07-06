@@ -4,7 +4,9 @@ var baseUrl = window.location.protocol + "//" + window.location.hostname;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     baseUrl = baseUrl + ":5000";
 }
-
+else {
+    baseUrl = baseUrl + ":" + window.location.port + process.env.PUBLIC_URL;
+}
 module.exports = {
 
     searchLongName: function (longName) {

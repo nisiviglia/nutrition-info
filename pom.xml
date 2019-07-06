@@ -7,7 +7,7 @@
   <groupId>com.siviglia.web.nutritioninfo</groupId>
   <artifactId>nutrition-info</artifactId>
   <version>0.9.9</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>nutrition-info</name>
   <!-- FIXME change it to the project's website -->
@@ -31,6 +31,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
@@ -40,6 +45,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-tomcat</artifactId>
 		<version>2.1.5.RELEASE</version>
+        <scope>provided</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>

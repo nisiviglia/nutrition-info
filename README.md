@@ -51,11 +51,30 @@ java -Dcom.sun.management.jmxremote=true \
 -jar target/<name of jar>.jar
 ```
 
-## Building
-package:
+## Package as war file
+  
+Change the following in pom.xml:
+
+```
+<packaging>war</packaging>
+```
+``` 
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+    <version>2.1.5.RELEASE</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+running:
 ```
 mvn package
 ```
+### Tomcat8
+  * Remember to have write access to the hibernate search index folder.
+    * `/var/lib/tomcat8`
+  * Backend stdout log file is located in `/var/log/tomcat8/catalina.out`.
 
 ## Database Creation
 config files: 
