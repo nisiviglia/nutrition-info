@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.9.0",
   "private": true,
-  "homepage": "",
+  "homepage": "192.168.1.5:8080/nutrition",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

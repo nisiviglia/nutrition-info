@@ -59,7 +59,7 @@ public class CreateDatabase {
         SessionFactory factory;
 
         try {
-            File file = new File("src/main/java/com/siviglia/web/nutritioninfo/util/hibernate.cfg.xml");
+            File file = new File("target/classes/hibernate.cfg.xml");
             factory = new Configuration().configure(file).buildSessionFactory();
 
         } catch (Throwable ex) { 

@@ -2,14 +2,11 @@
  
   <session-factory>
       <!-- Database connection settings -->
-      <!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-      <property name="connection.driver_class">com.mysql.jdbc.Driver</property> -->
-      <!-- <property name="connection.url">jdbc:mysql://localhost:3306/nutrition_info2?serverTimezone=UTC</property> -->
-      <!-- <property name="connection.username">nutrition_info</property> -->
-
-      <property name="connection.url">jdbc:h2:file:~/nutrition_info</property>
-      <property name="connection.username">sa</property>
-      <property name="hibernate.hbm2ddl.auto">create</property>
+      <property name="connection.driver_class">@db.driver_class@</property>
+      <property name="connection.url">@db.url@</property>
+      <property name="connection.username">@db.user@</property>
+      <property name="hibernate.dialect">@db.dialect@</property>
+      <property name="hibernate.hbm2ddl.auto">@db.hbm2ddl.auto@</property>
 
       <!-- Enable Hibernate's automatic session context management -->
       <property name="current_session_context_class">thread</property>
@@ -18,11 +15,10 @@
       <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
  
       <!-- Echo all executed SQL to stdout -->
-      <property name="show_sql">false</property> 
+      <property name="show_sql">@db.show_sql@</property> 
  
       <mapping class="com.siviglia.web.nutritioninfo.model.Products" />
       <mapping class="com.siviglia.web.nutritioninfo.model.Nutrients" />
- 
   </session-factory>
  
 </hibernate-configuration>
