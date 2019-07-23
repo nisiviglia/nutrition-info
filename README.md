@@ -1,13 +1,19 @@
 # Nutrition Info
 A slim and fast web-app for getting nutrition information. No information overload. Get what you need without clutter.
 
+## Install
+database and index files are located at:
+```
+/var/lib/nutrition-info/
+```
+Make sure to create folder and chown to tomcat8/user group.
+
 ## Development
 
-config files:
+main config file:
 ```
 pom.xml
 ```
-
 ### Back-end
 
 config files:
@@ -17,7 +23,7 @@ src/main/resources/application.properties
 
 run:
 ```
-mvn spring-boot:run -Dserver.port=5000
+mvn spring-boot:run -Dserver.port=5000 
 ```
 
 ### Front-end
@@ -30,7 +36,7 @@ src/main/app/package.json
 run:
 ```
 cd src/main/app/
-yarn start
+npm start
 ```
 
 ## Profiling
@@ -53,34 +59,35 @@ java -Dcom.sun.management.jmxremote=true \
 
 ## Package as war file
   
-Change the following in pom.xml:
-
+run:
 ```
-<packaging>war</packaging>
-```
-``` 
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-tomcat</artifactId>
-    <version>2.1.5.RELEASE</version>
-    <scope>provided</scope>
-</dependency>
+mvn package -P production-war -P build-frontend
 ```
 
-running:
-```
-mvn package
-```
 ### Tomcat8
   * Remember to have write access to the hibernate search index folder.
-    * `/var/lib/tomcat8`
+    * `/var/lib/nutrition-info
   * Backend stdout log file is located in `/var/log/tomcat8/catalina.out`.
 
 ## Deployment
-Make sure to change the homepage setting in the front-end's package.json file
-to match the production servers url.
+Notes on setting up deployment from maven to tomcat8 found [here.](https://stackoverflow.com/a/39878427/5618691)   
+
+*Make sure to change the homepage setting in the front-end's package.json file
+to match the production servers url and path.*
 ```
 "homepage": "192.168.1.5:8080/nutrient/"
+```
+
+### Staging Server
+```
+mvn tomcat7:deploy -P production-war -P deploy-staging
+```
+
+### Production Server
+You may have to undeploy the old war before deploying again.  
+
+```
+mvn tomcat7:deploy -P production-war -P deploy-production
 ```
 
 ## Database Creation
@@ -92,7 +99,7 @@ src/main/java/com/siviglia/web/nutritioninfo/util/CreateDatabase.java
 
 running:
 ```
-mvn compile exec:java@create-database
+mvn compile exec:java@create-database -P create-database
 ```
 
 ## Data

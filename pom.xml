@@ -19,13 +19,14 @@
   </parent>
 
   <properties>
+    <project.data.folder>/var/lib/nutrition-info</project.data.folder>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <server.contextPath>/</server.contextPath>
     <server.port>5000</server.port>
-    <db.url>jdbc:h2:file:~/nutrition_info</db.url>
+    <db.url>jdbc:h2:file:${project.data.folder}/nutrition_info</db.url>
     <db.driver_class>org.h2.Driver</db.driver_class>
     <db.dialect>org.hibernate.dialect.H2Dialect</db.dialect>
     <db.user>sa</db.user>
@@ -33,16 +34,9 @@
     <db.driver_class>com.mysql.jdbc.Driver</db.driver_class>
     <db.dialect>org.hibernate.dialect.MySQL5Dialect</db.dialect>
     <db.user>nutrition_info</db.user> -->
-
     <db.hbm2ddl.auto>update</db.hbm2ddl.auto>
     <db.show_sql>false</db.show_sql>
-    <hibernate.search.default.indexBase>{user.home}/index/default/</hibernate.search.default.indexBase>
-
-    <frontend.contextPath>/nutrient</frontend.contextPath>
-    <frontend-src-dir>${project.basedir}/src/main/app</frontend-src-dir>
-    <node.version>v12.3.1</node.version>
-    <yarn.version>v1.16.0</yarn.version>
-    <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+    <hibernate.search.default.indexBase>${project.data.folder}/index/default/</hibernate.search.default.indexBase>
   </properties>
     
   <dependencies>
@@ -206,8 +200,6 @@
             <id>production-war</id>
             <properties>
                 <packaging.type>war</packaging.type>
-                <hibernate.search.default.indexBase>/var/lib/tomcat8/index/default/</hibernate.search.default.indexBase>
-                <db.url>jdbc:h2:file:/home/nick/nutrition_info</db.url>
             </properties>
             <dependencies>
                 <dependency>
@@ -221,10 +213,62 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.2.3</version>
+                        <configuration>
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>deploy-staging</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.2</version>
+                        <configuration>
+                            <url>http://localhost:8080/manager/text</url>
+                            <server>StagingServer</server>
+                            <path>${server.contextPath}</path>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>deploy-production</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.2</version>
+                        <configuration>
+                            <url>http://chowinfo.com:8080/manager/text</url>
+                            <server>chowinfoServer</server>
+                            <path>/</path>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <profile>
             <id>build-frontend</id>
+            <properties>
+                <frontend-src-dir>${project.basedir}/src/main/app</frontend-src-dir>
+                <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -232,8 +276,8 @@
                         <artifactId>frontend-maven-plugin</artifactId>
                         <version>${frontend-maven-plugin.version}</version>
                         <configuration>
-                            <nodeVersion>${node.version}</nodeVersion>
-                            <yarnVersion>${yarn.version}</yarnVersion>
+                            <nodeVersion>v12.3.1</nodeVersion>
+                            <yarnVersion>v1.16.0</yarnVersion>
                             <workingDirectory>${frontend-src-dir}</workingDirectory>
                             <installDirectory>${project.build.directory}</installDirectory>
                         </configuration>
