@@ -48,6 +48,18 @@ public class BuildSearchIndex implements ApplicationListener<ApplicationReadyEve
    */
   @Override
   public void onApplicationEvent(final ApplicationReadyEvent event) {
+    
+    //I added this so indexing can be turned off
+    try{
+        String envIndex = System.getenv("NUTRITION_INFO_INDEXONSTART"); 
+        if(envIndex.toUpperCase().compareTo("FALSE") == 0){
+            return;  
+        }
+    }
+    catch(NullPointerException | SecurityException ex){
+        System.out.println("Unable to get environment variable \"NUTRITION_INFO_INDEXONSTART\". error: " + ex);
+    }
+
     try {
       FullTextEntityManager fullTextEntityManager =
         Search.getFullTextEntityManager(entityManager);

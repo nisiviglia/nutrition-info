@@ -102,6 +102,12 @@ running:
 mvn compile exec:java@create-database -P create-database
 ```
 
+## Disable Search Indexing On Start
+set the following envirnment varible to false to disable.
+```
+NUTRITION_INFO_INDEXONSTART= FALSE
+```
+
 ## Data
 Grab "All Foods" csv file.  
 <https://fdc.nal.usda.gov/download-datasets.html>
