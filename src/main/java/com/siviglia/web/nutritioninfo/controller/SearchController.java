@@ -32,7 +32,7 @@ import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
 import com.siviglia.web.nutritioninfo.exception.NotFoundException;
 
 @RestController
-class SearchController{
+public class SearchController{
 
     @Autowired
     private ProductSearchService productSearchService;
