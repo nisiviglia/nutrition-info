@@ -105,7 +105,7 @@ mvn compile exec:java@create-database -P create-database
 ## Disable Search Indexing On Start
 set the following envirnment varible to false to disable.
 ```
-NUTRITION_INFO_INDEXONSTART= FALSE
+NUTRITION_INFO_INDEXONSTART='FALSE'
 ```
 
 ## Data

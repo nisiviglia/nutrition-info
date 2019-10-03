@@ -9,13 +9,17 @@ package com.siviglia.web.nutritioninfo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.Search;
+import org.hibernate.search.mapper.orm.session.SearchSession;
+import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.mapper.orm.massindexing.MassIndexer;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import javax.transaction.Transactional;
+
+import com.siviglia.web.nutritioninfo.model.Products;
 
 /**
  * The only meaning for this class is to build the Lucene index at application
@@ -61,9 +65,10 @@ public class BuildSearchIndex implements ApplicationListener<ApplicationReadyEve
     }
 
     try {
-      FullTextEntityManager fullTextEntityManager =
-        Search.getFullTextEntityManager(entityManager);
-      fullTextEntityManager.createIndexer().startAndWait();
+        SearchSession searchSession = Search.session(entityManager);
+        MassIndexer indexer = searchSession.massIndexer( Products.class ).threadsToLoadObjects(7);
+
+        indexer.startAndWait();
     }
     catch (InterruptedException e) {
       System.out.println(

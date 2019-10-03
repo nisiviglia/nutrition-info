@@ -14,12 +14,10 @@
 package com.siviglia.web.nutritioninfo.repository;
 
 import org.apache.lucene.search.Query;
-import org.hibernate.search.engine.ProjectionConstants;
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.FullTextQuery;
-import org.hibernate.search.jpa.Search;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
+import org.hibernate.search.mapper.orm.session.SearchSession;
+import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.engine.search.query.SearchResult;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,52 +34,18 @@ public class ProductSearchService {
     private EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
-    public List<Products> searchProductsByKeywordQuery(
+    public ProductsDTO searchProductsByKeywordQuery(
             String text, int maxResults, int firstResult){
-        
-        Query keywordQuery = getQueryBuilder()
-            .keyword()
-            .onFields("longName", "manufacturer")
-            .matching(text)
-            .createQuery();
+            
+        SearchSession searchSession = Search.session( entityManager );
+        SearchResult<Products> results = searchSession.search( Products.class )
+            .predicate( f -> f.match()
+                        .fields("longName", "manufacturer")
+                        .matching(text)
+                    )
+                    .fetch(firstResult, maxResults);
 
-        List<Products> products = getJpaQuery(keywordQuery)
-            .setMaxResults(maxResults)
-            .setFirstResult(firstResult)
-            .getResultList();
-
-        return products;
+        return new ProductsDTO(results.getHits(), results.getTotalHitCount());
     }
     
-    public int getResulSizeOfLongNameQuery(String text){
-
-        Query keywordQuery = getQueryBuilder()
-            .keyword()
-            .onFields("longName", "manufacturer")
-            .matching(text)
-            .createQuery();
-        
-        return getJpaQuery(keywordQuery).getResultSize();
-    }
-
-    private QueryBuilder getQueryBuilder() {
-
-        FullTextEntityManager fullTextEntityManager = 
-			Search.getFullTextEntityManager(entityManager);
-
-        return fullTextEntityManager.getSearchFactory()
-            .buildQueryBuilder()
-            .forEntity(Products.class)
-            .get();
-    }
-
-	private FullTextQuery getJpaQuery(Query luceneQuery) {
-
-        FullTextEntityManager fullTextEntityManager = 
-			Search.getFullTextEntityManager(entityManager);
-
-        return fullTextEntityManager
-			.createFullTextQuery(luceneQuery, Products.class);
-    }
-
 }

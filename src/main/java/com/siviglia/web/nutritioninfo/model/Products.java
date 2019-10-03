@@ -15,11 +15,10 @@ package com.siviglia.web.nutritioninfo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
+import org.hibernate.search.engine.backend.types.Searchable;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -42,14 +41,14 @@ public class Products {
     private int ndbNumber;
 
     @Column(name="long_name")
-    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @FullTextField(analyzer= "english", searchable= Searchable.YES)
     private String longName;
 
     @Column(name="gtin_upc")
     private String gtinUPC;
 
     @Column(name="manufacturer")
-    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @FullTextField(analyzer= "english", searchable= Searchable.YES)
     private String manufacturer;
     
     @Column(name="date_modified")

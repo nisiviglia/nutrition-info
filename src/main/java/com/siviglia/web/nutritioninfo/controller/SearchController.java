@@ -29,6 +29,7 @@ import java.util.HashMap;
 import com.siviglia.web.nutritioninfo.model.Products;
 import com.siviglia.web.nutritioninfo.repository.ProductSearchService;
 import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
+import com.siviglia.web.nutritioninfo.repository.ProductsDTO;
 import com.siviglia.web.nutritioninfo.exception.NotFoundException;
 
 @RestController
@@ -55,19 +56,18 @@ public class SearchController{
         }
         
         //Grab search results
-        List<Products> products = 
+        ProductsDTO productsDTO = 
             productSearchService.searchProductsByKeywordQuery(
                     name, maxResults, firstResult);
-
+        
         //Create json results
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search_query", name);
-        map.put("total_results", 
-                productSearchService.getResulSizeOfLongNameQuery(name));
+        map.put("total_results", productsDTO.getTotalResults() );
         map.put("max_results", maxResults);
-        map.put("returned_results", products.size() );
+        map.put("returned_results", productsDTO.getProducts().size() );
         map.put("first_result", firstResult);
-        map.put("products", products);
+        map.put("products", productsDTO.getProducts() );
 
         return map;
     }
