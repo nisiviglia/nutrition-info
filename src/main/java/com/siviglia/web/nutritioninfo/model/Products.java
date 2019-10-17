@@ -16,9 +16,11 @@ package com.siviglia.web.nutritioninfo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 import org.hibernate.search.engine.backend.types.Searchable;
+import org.hibernate.search.engine.backend.document.model.dsl.ObjectFieldStorage;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -70,6 +72,7 @@ public class Products {
     private String householdServingSizeFulltext;
 
     @OneToMany(mappedBy= "products", fetch= FetchType.LAZY)
+    @IndexedEmbedded(includePaths = {"nutrientCode", "outputValue"}, storage = ObjectFieldStorage.NESTED)
     private List<Nutrients> nutrients;
 
     public int getNDBNumber(){

@@ -15,6 +15,9 @@ package com.siviglia.web.nutritioninfo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
+import org.hibernate.search.engine.backend.types.Searchable;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -36,13 +39,15 @@ public class Nutrients{
     private long nutrientId;
 
     @Column(name="nutrient_code")
+    @GenericField(searchable= Searchable.YES)
     private int nutrientCode;
 
     @Column(name="nutrient_name")
     private String nutrientName;
 
     @Column(name="output_value")
-    private float outputValue;
+    @GenericField(searchable= Searchable.YES)
+    private double outputValue;
 
     @Column(name="output_uom")
     private String outputUOM;
@@ -77,11 +82,11 @@ public class Nutrients{
         this.nutrientName = nutrientName;
     }
 
-    public float getOutputValue(){
+    public double getOutputValue(){
         return outputValue;
     }
 
-    public void setOutputValue(float outputValue){
+    public void setOutputValue(double outputValue){
         this.outputValue = outputValue;
     }
     

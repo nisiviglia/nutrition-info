@@ -57,6 +57,7 @@ public class BuildSearchIndex implements ApplicationListener<ApplicationReadyEve
     try{
         String envIndex = System.getenv("NUTRITION_INFO_INDEXONSTART"); 
         if(envIndex.toUpperCase().compareTo("FALSE") == 0){
+            System.out.println("Skipping Indexing");
             return;  
         }
     }

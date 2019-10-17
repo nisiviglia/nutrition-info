@@ -14,10 +14,13 @@
 package com.siviglia.web.nutritioninfo.repository;
 
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.RegexpQuery;
+import org.apache.lucene.index.Term;
 import org.springframework.stereotype.Repository;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.backend.lucene.LuceneExtension;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,15 +36,32 @@ public class ProductSearchService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @SuppressWarnings("unchecked")
-    public ProductsDTO searchProductsByKeywordQuery(
-            String text, int maxResults, int firstResult){
+    //@SuppressWarnings("unchecked")
+    public ProductsDTO searchProductsByKeyword(String text, int maxResults, int firstResult){
             
         SearchSession searchSession = Search.session( entityManager );
         SearchResult<Products> results = searchSession.search( Products.class )
             .predicate( f -> f.match()
                         .fields("longName", "manufacturer")
                         .matching(text)
+                    )
+                    .fetch(firstResult, maxResults);
+
+        return new ProductsDTO(results.getHits(), results.getTotalHitCount());
+    }
+
+    public ProductsDTO searchProductsByLowFatAndKeyword(String text, int maxResults, int firstResult, double atMostFat){
+
+        SearchSession searchSession = Search.session( entityManager );
+        SearchResult<Products> results = searchSession.search( Products.class )
+            .predicate( f -> f.bool()
+                        .must( f.match().fields("longName", "manufacturer").matching(text) )
+                        .must( f.nested().objectField("nutrients")
+                            .nest( f.bool() 
+                                .must( f.match().field("nutrients.nutrientCode").matching(1004) ) //1004 is Total liptid (fat)
+                                .must( f.range().field("nutrients.outputValue").atMost( atMostFat ) )
+                            )
+                        )
                     )
                     .fetch(firstResult, maxResults);
 

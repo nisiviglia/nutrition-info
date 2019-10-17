@@ -57,8 +57,40 @@ public class SearchController{
         
         //Grab search results
         ProductsDTO productsDTO = 
-            productSearchService.searchProductsByKeywordQuery(
+            productSearchService.searchProductsByKeyword(
                     name, maxResults, firstResult);
+        
+        //Create json results
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search_query", name);
+        map.put("total_results", productsDTO.getTotalResults() );
+        map.put("max_results", maxResults);
+        map.put("returned_results", productsDTO.getProducts().size() );
+        map.put("first_result", firstResult);
+        map.put("products", productsDTO.getProducts() );
+
+        return map;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value= "/api/v1/search/lowfat/name/{name}",
+        method= RequestMethod.GET,
+        produces= "application/json")
+    public @ResponseBody Map<String, Object> searchLowFat(
+            @PathVariable() String name,
+            @RequestParam(name= "first_result", defaultValue="0") int firstResult,
+            @RequestParam(name= "max_results", defaultValue="20") int maxResults,
+            @RequestParam(name= "at_most", defaultValue="10.0") double atMostFat){
+
+        //Keep max results less than 100.
+        if(maxResults > 100){
+            maxResults = 100;
+        }
+        
+        //Grab search results
+        ProductsDTO productsDTO = 
+            productSearchService.searchProductsByLowFatAndKeyword(
+                    name, maxResults, firstResult, atMostFat);
         
         //Create json results
         Map<String, Object> map = new HashMap<String, Object>();
