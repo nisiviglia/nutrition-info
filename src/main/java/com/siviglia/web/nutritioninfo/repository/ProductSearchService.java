@@ -68,4 +68,81 @@ public class ProductSearchService {
         return new ProductsDTO(results.getHits(), results.getTotalHitCount());
     }
     
+    public ProductsDTO searchProductsByHeartHealthyAndKeyword(String text, int maxResults, int firstResult, double atMostSalt, double atMostChol){
+
+        SearchSession searchSession = Search.session( entityManager );
+        SearchResult<Products> results = searchSession.search( Products.class )
+            .predicate( f -> f.bool()
+                        .must( f.match().fields("longName", "manufacturer").matching(text) )
+                        .must( f.nested().objectField("nutrients")
+                            .nest( f.bool() 
+                                .must( f.match().field("nutrients.nutrientCode").matching(1093) ) //1253 is Sodium NA 
+                                .must( f.range().field("nutrients.outputValue").atMost( atMostSalt ) )
+                            )
+                        )
+                        .must( f.nested().objectField("nutrients")
+                            .nest( f.bool() 
+                                .must( f.match().field("nutrients.nutrientCode").matching(1253) ) //1253 is Cholesterol
+                                .must( f.range().field("nutrients.outputValue").atMost( atMostChol ) )
+                            )
+                        )
+                    )
+                    .fetch(firstResult, maxResults);
+
+        return new ProductsDTO(results.getHits(), results.getTotalHitCount());
+    }
+
+    public ProductsDTO searchProductsByLowSugarAndKeyword(String text, int maxResults, int firstResult, double atMostSugar){
+
+        SearchSession searchSession = Search.session( entityManager );
+        SearchResult<Products> results = searchSession.search( Products.class )
+            .predicate( f -> f.bool()
+                        .must( f.match().fields("longName", "manufacturer").matching(text) )
+                        .must( f.nested().objectField("nutrients")
+                            .nest( f.bool() 
+                                .must( f.match().field("nutrients.nutrientCode").matching(2000) ) //2000 is Sugars 
+                                .must( f.range().field("nutrients.outputValue").atMost( atMostSugar ) )
+                            )
+                        )
+                    )
+                    .fetch(firstResult, maxResults);
+
+        return new ProductsDTO(results.getHits(), results.getTotalHitCount());
+    }
+
+    public ProductsDTO searchProductsByLowCarbAndKeyword(String text, int maxResults, int firstResult, double atMostCarbs){
+
+        SearchSession searchSession = Search.session( entityManager );
+        SearchResult<Products> results = searchSession.search( Products.class )
+            .predicate( f -> f.bool()
+                        .must( f.match().fields("longName", "manufacturer").matching(text) )
+                        .must( f.nested().objectField("nutrients")
+                            .nest( f.bool() 
+                                .must( f.match().field("nutrients.nutrientCode").matching(1005) ) // 1005 is Carbs
+                                .must( f.range().field("nutrients.outputValue").atMost( atMostCarbs ) )
+                            )
+                        )
+                    )
+                    .fetch(firstResult, maxResults);
+
+        return new ProductsDTO(results.getHits(), results.getTotalHitCount());
+    }
+
+    public ProductsDTO searchProductsByLowCalAndKeyword(String text, int maxResults, int firstResult, double atMostCal){
+
+        SearchSession searchSession = Search.session( entityManager );
+        SearchResult<Products> results = searchSession.search( Products.class )
+            .predicate( f -> f.bool()
+                        .must( f.match().fields("longName", "manufacturer").matching(text) )
+                        .must( f.nested().objectField("nutrients")
+                            .nest( f.bool() 
+                                .must( f.match().field("nutrients.nutrientCode").matching(1008) ) // 1008 is Energy
+                                .must( f.range().field("nutrients.outputValue").atMost( atMostCal ) )
+                            )
+                        )
+                    )
+                    .fetch(firstResult, maxResults);
+
+        return new ProductsDTO(results.getHits(), results.getTotalHitCount());
+    }
 }

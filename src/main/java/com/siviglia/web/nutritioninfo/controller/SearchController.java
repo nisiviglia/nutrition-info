@@ -105,6 +105,136 @@ public class SearchController{
     }
 
     @CrossOrigin
+    @RequestMapping(value= "/api/v1/search/heartHealthy/name/{name}",
+        method= RequestMethod.GET,
+        produces= "application/json")
+    public @ResponseBody Map<String, Object> searchHeartHealthy(
+            @PathVariable() String name,
+            @RequestParam(name= "first_result", defaultValue="0") int firstResult,
+            @RequestParam(name= "max_results", defaultValue="20") int maxResults,
+            @RequestParam(name= "at_most_salt", defaultValue="10.0") double atMostSalt,
+            @RequestParam(name= "at_most_chol", defaultValue="5.0") double atMostChol){
+
+        //Keep max results less than 100.
+        if(maxResults > 100){
+            maxResults = 100;
+        }
+        
+        //Grab search results
+        ProductsDTO productsDTO = 
+            productSearchService.searchProductsByHeartHealthyAndKeyword(
+                    name, maxResults, firstResult, atMostSalt, atMostChol);
+        
+        //Create json results
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search_query", name);
+        map.put("total_results", productsDTO.getTotalResults() );
+        map.put("max_results", maxResults);
+        map.put("returned_results", productsDTO.getProducts().size() );
+        map.put("first_result", firstResult);
+        map.put("products", productsDTO.getProducts() );
+
+        return map;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value= "/api/v1/search/lowsugar/name/{name}",
+        method= RequestMethod.GET,
+        produces= "application/json")
+    public @ResponseBody Map<String, Object> searchLowSugar(
+            @PathVariable() String name,
+            @RequestParam(name= "first_result", defaultValue="0") int firstResult,
+            @RequestParam(name= "max_results", defaultValue="20") int maxResults,
+            @RequestParam(name= "at_most", defaultValue="10.0") double atMostSugar){
+
+        //Keep max results less than 100.
+        if(maxResults > 100){
+            maxResults = 100;
+        }
+        
+        //Grab search results
+        ProductsDTO productsDTO = 
+            productSearchService.searchProductsByLowSugarAndKeyword(
+                    name, maxResults, firstResult, atMostSugar);
+        
+        //Create json results
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search_query", name);
+        map.put("total_results", productsDTO.getTotalResults() );
+        map.put("max_results", maxResults);
+        map.put("returned_results", productsDTO.getProducts().size() );
+        map.put("first_result", firstResult);
+        map.put("products", productsDTO.getProducts() );
+
+        return map;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value= "/api/v1/search/lowcarb/name/{name}",
+        method= RequestMethod.GET,
+        produces= "application/json")
+    public @ResponseBody Map<String, Object> searchLowCarb(
+            @PathVariable() String name,
+            @RequestParam(name= "first_result", defaultValue="0") int firstResult,
+            @RequestParam(name= "max_results", defaultValue="20") int maxResults,
+            @RequestParam(name= "at_most", defaultValue="10.0") double atMostCarbs){
+
+        //Keep max results less than 100.
+        if(maxResults > 100){
+            maxResults = 100;
+        }
+        
+        //Grab search results
+        ProductsDTO productsDTO = 
+            productSearchService.searchProductsByLowCarbAndKeyword(
+                    name, maxResults, firstResult, atMostCarbs);
+        
+        //Create json results
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search_query", name);
+        map.put("total_results", productsDTO.getTotalResults() );
+        map.put("max_results", maxResults);
+        map.put("returned_results", productsDTO.getProducts().size() );
+        map.put("first_result", firstResult);
+        map.put("products", productsDTO.getProducts() );
+
+        return map;
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value= "/api/v1/search/lowcal/name/{name}",
+        method= RequestMethod.GET,
+        produces= "application/json")
+    public @ResponseBody Map<String, Object> searchLowCal(
+            @PathVariable() String name,
+            @RequestParam(name= "first_result", defaultValue="0") int firstResult,
+            @RequestParam(name= "max_results", defaultValue="20") int maxResults,
+            @RequestParam(name= "at_most", defaultValue="200.0") double atMostCals){
+
+        //Keep max results less than 100.
+        if(maxResults > 100){
+            maxResults = 100;
+        }
+        
+        //Grab search results
+        ProductsDTO productsDTO = 
+            productSearchService.searchProductsByLowCalAndKeyword(
+                    name, maxResults, firstResult, atMostCals);
+        
+        //Create json results
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search_query", name);
+        map.put("total_results", productsDTO.getTotalResults() );
+        map.put("max_results", maxResults);
+        map.put("returned_results", productsDTO.getProducts().size() );
+        map.put("first_result", firstResult);
+        map.put("products", productsDTO.getProducts() );
+
+        return map;
+    }
+
+    @CrossOrigin
     @RequestMapping(value= "/api/v1/product/ndbnumber/{ndbNumber}",
         method= RequestMethod.GET,
         produces= "application/json")
