@@ -33,6 +33,7 @@ import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
 import com.siviglia.web.nutritioninfo.repository.ProductsDTO;
 import com.siviglia.web.nutritioninfo.repository.ProductSearchConstraint;
 import com.siviglia.web.nutritioninfo.exception.NotFoundException;
+import com.siviglia.web.nutritioninfo.exception.BadRequestException;
 
 @RestController
 public class SearchController{
@@ -87,6 +88,11 @@ public class SearchController{
         //Keep max results less than 100.
         if(maxResults > 100){
             maxResults = 100;
+        }
+
+        //dont allow more than 5 constraints
+        if(constraints.size() > 5){
+            throw new BadRequestException();
         }
 
         //Grab search results
