@@ -36,7 +36,7 @@ src/main/app/package.json
 run:
 ```
 cd src/main/app/
-npm start
+yarn run start
 ```
 
 ## Profiling
