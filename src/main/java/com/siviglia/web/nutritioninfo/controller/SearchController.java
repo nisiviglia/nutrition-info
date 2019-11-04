@@ -91,7 +91,7 @@ public class SearchController{
 
         //Grab search results
         ProductsDTO productsDTO = 
-            productSearchService.searchProductWithConstraints(
+            productSearchService.searchProductsWithConstraints(
                     name, maxResults, firstResult, constraints);
         
         //Create json results

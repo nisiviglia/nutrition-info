@@ -49,7 +49,7 @@ public class ProductSearchService {
         return new ProductsDTO(results.getHits(), results.getTotalHitCount());
     }
 
-    public ProductsDTO searchProductWithConstraints(String text, int maxResults, int firstResult, List<ProductSearchConstraint> constraints){
+    public ProductsDTO searchProductsWithConstraints(String text, int maxResults, int firstResult, List<ProductSearchConstraint> constraints){
 
         SearchSession searchSession = Search.session( entityManager );
         SearchResult<Products> results = searchSession.search( Products.class )
