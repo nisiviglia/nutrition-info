@@ -23,6 +23,30 @@ module.exports = {
             })
     },
 
+    searchLongNameWithConstraints: function (longName, constraints) {
+        return fetch(baseUrl + '/api/v1/search/advanced/name/' + longName, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'},
+                    body: JSON.stringify(constraints)})
+            .then(response => {
+                return response.json();
+            })
+    },
+
+    searchLongNameAfterWithConstraints: function (longName, after, constraints) {
+        return fetch(baseUrl + '/api/v1/search/advanced/name/' + longName + '?first_result=' + after, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'},
+                    body: JSON.stringify(constraints)})
+            .then(response => {
+                return response.json();
+            })
+    },
+
     getProduct: function (ndbNumber) {
         return fetch(baseUrl + '/api/v1/product/ndbnumber/' + ndbNumber)
             .then(response => {

@@ -16,6 +16,7 @@ import java.io.Serializable;
 public class ProductSearchConstraint implements Serializable {
     
     private static final long serialVersionUID = -679991422884602033L;
+    private String id;
     private int code;
     private boolean isInclusiveLower;
     private double amount;
@@ -23,9 +24,23 @@ public class ProductSearchConstraint implements Serializable {
     public ProductSearchConstraint(){}
 
     public ProductSearchConstraint(int code, boolean isInclusiveLower, int amount){
+
+        this("0", code, isInclusiveLower, amount);
+    }
+
+    public ProductSearchConstraint(String id, int code, boolean isInclusiveLower, int amount){
+        this.id = id;
         this.code = code;
         this.isInclusiveLower = isInclusiveLower;
         this.amount = amount;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public void setCode(int code){
@@ -54,7 +69,7 @@ public class ProductSearchConstraint implements Serializable {
 
     @Override
     public String toString(){
-        return String.format("[code= %d , isInclusiveLower= %b , amount= %f]"
-                , this.code, this.isInclusiveLower, this.amount);
+        return String.format("[id=%s, code= %d , isInclusiveLower= %b , amount= %f]"
+                , this.id, this.code, this.isInclusiveLower, this.amount);
     }
 }

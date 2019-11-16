@@ -4,6 +4,7 @@ import ProductsCard from './ProductsCard';
 import * as api from '../api/SearchAPI';
 import Pagination from './Pagination';
 import SearchStore from './SearchStore';
+import Constraints from '../constraints/Constraints';
 
 class Search extends React.Component {
 
@@ -16,16 +17,20 @@ class Search extends React.Component {
             returned_results: 0,
             first_result: 0,
             products: [],
+            constraints: [],
         };
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.sendSearchQuery = this.sendSearchQuery.bind(this);
+        this.sendSearchQueryWithConstraints = this.sendSearchQueryWithConstraints.bind(this);
+        this.handleUpdateConstraints = this.handleUpdateConstraints.bind(this);
         this.handleLoadMoreProducts = this.handleLoadMoreProducts.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         document.title = window.location.hostname;
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let state = SearchStore.get();
         if(state){
             this.setState(state); 
@@ -34,6 +39,7 @@ class Search extends React.Component {
 
     componentWillUnmount(){
         SearchStore.set(this.state);
+        console.log(this.state.constraints);
     }
     
     handleChange(event) {
@@ -52,6 +58,18 @@ class Search extends React.Component {
             return;
         }
 
+        if(this.state.constraints.length === 0){
+            
+            this.sendSearchQuery();
+        } else {
+        
+            this.sendSearchQueryWithConstraints();
+        }
+
+    }
+
+    sendSearchQuery(){
+    
         api.searchLongName(this.state.search_query)
         .then(data => {
             this.setState({total_results: data['total_results'] 
@@ -68,10 +86,61 @@ class Search extends React.Component {
         .catch(err => {
             console.log(err.message);
         })
+    
+    }
+    
+    sendSearchQueryWithConstraints(){
+
+        api.searchLongNameWithConstraints(this.state.search_query, this.state.constraints)
+        .then(data => {
+            this.setState({total_results: data['total_results'] 
+                ? data['total_results'] : 0});
+            this.setState({max_results: data['max_results'] 
+                ? data['max_results'] : 0});
+            this.setState({returned_results: data['returned_results'] 
+                ? data['returned_results'] : 0});
+            this.setState({first_result: data['first_result'] 
+                ? data['first_result'] : 0});
+            this.setState({products: data['products'] 
+                ? data['products'] : []});
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+    
+    }
+
+    handleUpdateConstraints(array){
+        this.setState({constraints: array});
     }
 
     handleLoadMoreProducts(event){
+
+        if(this.state.constraints.length === 0){
+            
+            this.sendLoadMoreProducts();
+        } else {
+        
+            this.sendLoadMoreProductsWithConstraints();
+        }
+    }
+
+    sendLoadMoreProducts(){
+    
         api.searchLongNameAfter(this.state.search_query, this.state.first_result + this.state.max_results)
+        .then(data => {
+            this.setState({first_result: data['first_result']});
+            this.setState({products: this.state.products.concat(data['products'])});
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+    }
+
+    sendLoadMoreProductsWithConstraints(){
+    
+        api.searchLongNameAfterWithConstraints(this.state.search_query, 
+                this.state.first_result + this.state.max_results, this.state.constraints)
         .then(data => {
             this.setState({first_result: data['first_result']});
             this.setState({products: this.state.products.concat(data['products'])});
@@ -97,11 +166,22 @@ class Search extends React.Component {
         return (
             <div className="search-container">
                 <div className="searchbar" >
-                    <input type="text" value={this.state.search_query} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+                    <input type="text" 
+                        spellCheck="true" 
+                        value={this.state.search_query} 
+                        onChange={this.handleChange} 
+                        onKeyPress={this.handleKeyPress}
+                    />
                     <button type="button" onClick={this.handleSubmit}>
                         <img src="musica-searcher.svg" alt="Search"/>
                     </button>
                 </div>
+
+                <Constraints 
+                    handleUpdateConstraints={this.handleUpdateConstraints}
+                    constraints={this.state.constraints}
+                />
+
                 <div className="results-container">
                     {this.state.products.map(product => 
                          

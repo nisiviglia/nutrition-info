@@ -94,7 +94,7 @@ public class SearchController{
         if(constraints.size() > 5){
             throw new BadRequestException();
         }
-
+        
         //Grab search results
         ProductsDTO productsDTO = 
             productSearchService.searchProductsWithConstraints(
@@ -103,6 +103,7 @@ public class SearchController{
         //Create json results
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search_query", name);
+        map.put("constraints", constraints);
         map.put("total_results", productsDTO.getTotalResults() );
         map.put("max_results", maxResults);
         map.put("returned_results", productsDTO.getProducts().size() );

@@ -164,19 +164,19 @@ module.exports = {
         {
             dbCode: 1109,
             dbName: "Vitamin E (alpha-tocopherol)",
-            displayName: "Vitamin E",
+            displayName: "Vitamin E (alpha-tocopherol)",
             dailyValue: 30,
         },
         {
             dbCode: 1124,
             dbName: "Vitamin E (label entry primarily)",
-            displayName: "Vitamin E",
+            displayName: "Vitamin E (label entry primarily)",
             dailyValue: 30,
         },
         {
             dbCode: 1185,
             dbName: "Vitamin K (phylloquinone)",
-            displayName: "Vitamin K",
+            displayName: "Vitamin K (phylloquinone)",
             dailyValue: 80,
         },
         {
@@ -308,7 +308,7 @@ module.exports = {
         {
             dbCode: 1012,
             dbName: "Fructose",
-            displayName: "fructose",
+            displayName: "Fructose",
             dailyValue: -1,
         },
         {
@@ -345,12 +345,6 @@ module.exports = {
             dbCode: 1056,
             dbName: "Sorbitol",
             displayName: "Sorbitol",
-            dailyValue: -1,
-        },
-        {
-            dbCode: 1057,
-            dbName: "Caffeine",
-            displayName: "Caffeine",
             dailyValue: -1,
         },
         {
@@ -462,12 +456,6 @@ module.exports = {
             dailyValue: -1,
         },
         {
-            dbCode: 1215,
-            dbName: "Methionine",
-            displayName: "Methionine",
-            dailyValue: -1,
-        },
-        {
             dbCode: 1216,
             dbName: "Cystine",
             displayName: "Cystine",
@@ -564,6 +552,18 @@ module.exports = {
             dailyValue: -1,
         },
         {
+            dbCode: 1368,
+            dbName: "Epigallocatechin-3-gallate",
+            displayName: "Epigallocatechin-3-gallate",
+            dailyValue: -1,
+        },
+        {
+            dbCode: 1403,
+            dbName: "Inulin",
+            displayName: "Inulin",
+            dailyValue: -1,
+        },
+        {
             dbCode: 1261,
             dbName: "8:0",
             displayName: "8:0",
@@ -591,18 +591,6 @@ module.exports = {
             dbCode: 1316,
             dbName: "18:2 n-6 c,c",
             displayName: "18:2 n-6 c,c",
-            dailyValue: -1,
-        },
-        {
-            dbCode: 1368,
-            dbName: "Epigallocatechin-3-gallate",
-            displayName: "Epigallocatechin-3-gallate",
-            dailyValue: -1,
-        },
-        {
-            dbCode: 1403,
-            dbName: "Inulin",
-            displayName: "Inulin",
             dailyValue: -1,
         },
         {
