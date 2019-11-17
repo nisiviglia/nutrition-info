@@ -84,20 +84,22 @@ public class CreateDatabase {
          *
         *******************************************************************************/
 
+        String path = "~/Desktop/FoodData_Central_csv_2019-10-11";
+
         System.out.println("Loading branded_food...");
-        stmt.execute("create table branded_food as select * from csvread('~/Desktop/FoodData_Central_csv_2019-04-02/branded_food.csv');");
+        stmt.execute(String.format("create table branded_food as select * from csvread('%s/branded_food.csv');", path));
         stmt.execute("create index fdc_id_branded on branded_food(fdc_id)");
 
         System.out.println("Loading food...");
-        stmt.execute("create table food as select * from csvread('~/Desktop/FoodData_Central_csv_2019-04-02/food.csv');");
+        stmt.execute(String.format("create table food as select * from csvread('%s/food.csv');", path));
         stmt.execute("create index fdc_id_food on food(fdc_id)");
         
         System.out.println("Loading food_nutrient...");
-        stmt.execute("create table food_nutrient as select * from csvread('~/Desktop/FoodData_Central_csv_2019-04-02/food_nutrient.csv');");
+        stmt.execute(String.format("create table food_nutrient as select * from csvread('%s/food_nutrient.csv');", path));
         stmt.execute("create index fdc_id_food_nutrient on food_nutrient(fdc_id)");
 
         System.out.println("Loading nutrient...");
-        stmt.execute("create table nutrient as select * from csvread('~/Desktop/FoodData_Central_csv_2019-04-02/nutrient.csv');");
+        stmt.execute(String.format("create table nutrient as select * from csvread('%s/nutrient.csv');", path));
 
         /*******************************************************************************
          * 
@@ -114,7 +116,6 @@ public class CreateDatabase {
         System.out.println("Creating remote database...");
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
-        List<Products> productsList = new ArrayList<Products>();
 
         for(int i=0; fdc_ids.next(); i++){
             ResultSet rs = conn.createStatement().executeQuery(
@@ -140,8 +141,12 @@ public class CreateDatabase {
                 Nutrients nutrients = new Nutrients();
                 nutrients.setNutrientCode(rs2.getInt("nutrient_id"));
                 nutrients.setNutrientName(rs2.getString("name"));
-                nutrients.setOutputValue(rs2.getFloat("amount"));
                 nutrients.setOutputUOM(rs2.getString("unit_name"));
+
+                //the csv files have the amount scaled to 100 grams.
+                //I want to store the amount scaled to the serving size.
+                float temp = (rs.getFloat("serving_size") / 100.0F) * rs2.getFloat("amount");
+                nutrients.setOutputValue(temp);
 
                 //for the many-to-one relationship you need to set both sides
                 //then save both side.
@@ -154,10 +159,12 @@ public class CreateDatabase {
             product.setNutrients(nutrientList);
             session.save(product);  
 
-            //Batch together. 2000 at a time.
+            //Batch together.
             if(i % 500 == 0){
                 session.flush();
                 session.clear();
+                tx.commit();
+                tx = session.beginTransaction();
             }
         }
         
@@ -167,6 +174,7 @@ public class CreateDatabase {
          *
         *******************************************************************************/
 
+        System.out.println("Cleaning up...");
         stmt.execute("drop all objects");
         stmt.closeOnCompletion();
         tx.commit();

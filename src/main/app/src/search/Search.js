@@ -156,7 +156,6 @@ class Search extends React.Component {
 
         if(i !== -1){
             outputValue = product.nutrients[i].outputValue;
-            outputValue = (product.servingSize / 100) * outputValue;
         }
 
         return outputValue.toFixed(0);

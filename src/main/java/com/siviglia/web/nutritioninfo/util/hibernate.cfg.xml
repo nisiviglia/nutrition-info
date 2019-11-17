@@ -7,6 +7,10 @@
       <property name="connection.username">@db.user@</property>
       <property name="hibernate.dialect">@db.dialect@</property>
       <property name="hibernate.hbm2ddl.auto">@db.hbm2ddl.auto@</property>
+      <property name="hibernate.search.backends.myBackend.type">lucene</property>
+      <property name="hibernate.search.backends.myBackend.lucene_version">LATEST</property>
+      <property name="hibernate.search.backends.myBackend.analysis.configurer">com.siviglia.web.nutritioninfo.model.ProductsLuceneAnalysisConfigurer</property>
+      <property name="hibernate.search.default_backend">myBackend</property>
 
       <!-- Enable Hibernate's automatic session context management -->
       <property name="current_session_context_class">thread</property>
