@@ -3,17 +3,12 @@
  * Unauthorized copying of this software, via any medium is strictly prohibited. 
  * Proprietary and confidential.
 **/
-/**
- * @file ProductSearchService.java
- * @brief Uses hibernate-search to index and search the products table.
- * @author Nicholas Siviglia
- */
 
 package com.siviglia.web.nutritioninfo.repository;
 
 import java.io.Serializable;
 
-public class ProductSearchConstraint implements Serializable {
+public class ProductSearchNutrientConstraint implements Serializable {
     
     private static final long serialVersionUID = -679991422884602033L;
     private String id;
@@ -21,14 +16,14 @@ public class ProductSearchConstraint implements Serializable {
     private boolean isInclusiveLower;
     private double amount;
 
-    public ProductSearchConstraint(){}
+    public ProductSearchNutrientConstraint(){}
 
-    public ProductSearchConstraint(int code, boolean isInclusiveLower, int amount){
+    public ProductSearchNutrientConstraint(int code, boolean isInclusiveLower, int amount){
 
         this("0", code, isInclusiveLower, amount);
     }
 
-    public ProductSearchConstraint(String id, int code, boolean isInclusiveLower, int amount){
+    public ProductSearchNutrientConstraint(String id, int code, boolean isInclusiveLower, int amount){
         this.id = id;
         this.code = code;
         this.isInclusiveLower = isInclusiveLower;

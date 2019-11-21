@@ -1,7 +1,7 @@
 import React from 'react';
 import * as dailyValues from '../product/DailyValues'; 
 
-const ConstraintsCard = props => (
+const NutrientConstraintsCard = props => (
     
     <div className="constrains-card">
             <select 
@@ -59,4 +59,4 @@ function nutrientTableComparator(a, b){
     return 0;
 }
 
-export default ConstraintsCard;
+export default NutrientConstraintsCard;

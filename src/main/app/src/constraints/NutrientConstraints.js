@@ -1,12 +1,12 @@
 import React from 'react';
-import ConstraintsCard from './ConstraintsCard'
+import NutrientConstraintsCard from './NutrientConstraintsCard'
 
-class Constraints extends React.Component {
+class NutrientConstraints extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            constraints: [],
+            nutrient_constraints: [],
             max: 5,
         };
         
@@ -16,12 +16,12 @@ class Constraints extends React.Component {
     }
 
     componentDidMount(){
-        this.setState({constraints: this.props.constraints});
+        this.setState({nutrient_constraints: this.props.nutrient_constraints});
     }
 
     handleAddContraint(event){
 
-        if(this.state.constraints.length >= this.state.max){
+        if(this.state.nutrient_constraints.length >= this.state.max){
             return;
         }
 
@@ -34,20 +34,20 @@ class Constraints extends React.Component {
             amount: 0
         };
         
-        let array = Array.from(this.state.constraints);
+        let array = Array.from(this.state.nutrient_constraints);
         array.push(c);
-        this.setState({constraints: array});
+        this.setState({nutrient_constraints: array});
         this.props.handleUpdateConstraints(array);
     }
 
     handleRemoveConstraint(id, event){
 
-        let array = Array.from(this.state.constraints);
+        let array = Array.from(this.state.nutrient_constraints);
 
         for(let i=0; i < array.length; i++){
             if(id === array[i].id){
                 array.splice(i, 1);
-                this.setState({constraints: array});
+                this.setState({nutrient_constraints: array});
                 this.props.handleUpdateConstraints(array);
                 return;
             }
@@ -59,7 +59,7 @@ class Constraints extends React.Component {
         const target = event.target; 
         const name = target.name;
 
-        let array = Array.from(this.state.constraints);
+        let array = Array.from(this.state.nutrient_constraints);
 
         for(let i=0; i < array.length; i++){
 
@@ -78,7 +78,7 @@ class Constraints extends React.Component {
                 
                 }
 
-                this.setState({constraints: array});
+                this.setState({nutrient_constraints: array});
                 this.props.handleUpdateConstraints(array);
                 return;
             }
@@ -87,11 +87,11 @@ class Constraints extends React.Component {
 
     render() {
         return (
-            <div className="constraints-container">
+            <div className="nutrient-constraints-container">
                 <button type="button" onClick={this.handleAddContraint}>+Limit</button> 
-                <div className="constraints-list">
-                    {this.state.constraints.map(c => 
-                        <ConstraintsCard
+                <div className="nutrient-constraints-list">
+                    {this.state.nutrient_constraints.map(c => 
+                        <NutrientConstraintsCard
                             key={c.id}
                             data={c}
                             handleRemoveConstraint={this.handleRemoveConstraint}
@@ -105,4 +105,4 @@ class Constraints extends React.Component {
 
 }
 
-export default Constraints;
+export default NutrientConstraints;

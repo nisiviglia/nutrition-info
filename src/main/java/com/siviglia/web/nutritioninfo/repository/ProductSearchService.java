@@ -49,7 +49,7 @@ public class ProductSearchService {
         return new ProductsDTO(results.getHits(), results.getTotalHitCount());
     }
 
-    public ProductsDTO searchProductsWithConstraints(String text, int maxResults, int firstResult, List<ProductSearchConstraint> constraints){
+    public ProductsDTO searchProductsWithConstraints(String text, int maxResults, int firstResult, List<ProductSearchNutrientConstraint> nutrientConstraints){
 
         SearchSession searchSession = Search.session( entityManager );
         SearchResult<Products> results = searchSession.search( Products.class )
@@ -57,7 +57,7 @@ public class ProductSearchService {
 
                     b.must( f.match().fields("longName", "manufacturer").matching(text) );
                     
-                    for(ProductSearchConstraint c : constraints){
+                    for(ProductSearchNutrientConstraint c : nutrientConstraints){
 
                         b.must( f.nested().objectField("nutrients")             
                         .nest( f.bool( nb -> {

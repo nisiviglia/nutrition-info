@@ -31,7 +31,7 @@ import com.siviglia.web.nutritioninfo.model.Products;
 import com.siviglia.web.nutritioninfo.repository.ProductSearchService;
 import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
 import com.siviglia.web.nutritioninfo.repository.ProductsDTO;
-import com.siviglia.web.nutritioninfo.repository.ProductSearchConstraint;
+import com.siviglia.web.nutritioninfo.repository.ProductSearchNutrientConstraint;
 import com.siviglia.web.nutritioninfo.exception.NotFoundException;
 import com.siviglia.web.nutritioninfo.exception.BadRequestException;
 
@@ -83,7 +83,7 @@ public class SearchController{
             @PathVariable() String name,
             @RequestParam(name= "first_result", defaultValue="0") int firstResult,
             @RequestParam(name= "max_results", defaultValue="20") int maxResults,
-            @RequestBody List<ProductSearchConstraint> constraints){
+            @RequestBody List<ProductSearchNutrientConstraint> nutrientConstraints){
 
         //Keep max results less than 100.
         if(maxResults > 100){
@@ -91,19 +91,19 @@ public class SearchController{
         }
 
         //dont allow more than 5 constraints
-        if(constraints.size() > 5){
+        if(nutrientConstraints.size() > 5){
             throw new BadRequestException();
         }
         
         //Grab search results
         ProductsDTO productsDTO = 
             productSearchService.searchProductsWithConstraints(
-                    name, maxResults, firstResult, constraints);
+                    name, maxResults, firstResult, nutrientConstraints);
         
         //Create json results
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search_query", name);
-        map.put("constraints", constraints);
+        map.put("nutrient_constraints", nutrientConstraints);
         map.put("total_results", productsDTO.getTotalResults() );
         map.put("max_results", maxResults);
         map.put("returned_results", productsDTO.getProducts().size() );

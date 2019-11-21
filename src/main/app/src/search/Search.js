@@ -4,7 +4,7 @@ import ProductsCard from './ProductsCard';
 import * as api from '../api/SearchAPI';
 import Pagination from './Pagination';
 import SearchStore from './SearchStore';
-import Constraints from '../constraints/Constraints';
+import NutrientConstraints from '../constraints/NutrientConstraints';
 
 class Search extends React.Component {
 
@@ -17,7 +17,7 @@ class Search extends React.Component {
             returned_results: 0,
             first_result: 0,
             products: [],
-            constraints: [],
+            nutrient_constraints: [],
         };
         
         this.handleChange = this.handleChange.bind(this);
@@ -39,7 +39,6 @@ class Search extends React.Component {
 
     componentWillUnmount(){
         SearchStore.set(this.state);
-        console.log(this.state.constraints);
     }
     
     handleChange(event) {
@@ -58,7 +57,7 @@ class Search extends React.Component {
             return;
         }
 
-        if(this.state.constraints.length === 0){
+        if(this.state.nutrient_constraints.length === 0){
             
             this.sendSearchQuery();
         } else {
@@ -91,7 +90,7 @@ class Search extends React.Component {
     
     sendSearchQueryWithConstraints(){
 
-        api.searchLongNameWithConstraints(this.state.search_query, this.state.constraints)
+        api.searchLongNameWithConstraints(this.state.search_query, this.state.nutrient_constraints)
         .then(data => {
             this.setState({total_results: data['total_results'] 
                 ? data['total_results'] : 0});
@@ -111,12 +110,12 @@ class Search extends React.Component {
     }
 
     handleUpdateConstraints(array){
-        this.setState({constraints: array});
+        this.setState({nutrient_constraints: array});
     }
 
     handleLoadMoreProducts(event){
 
-        if(this.state.constraints.length === 0){
+        if(this.state.nutrient_constraints.length === 0){
             
             this.sendLoadMoreProducts();
         } else {
@@ -140,7 +139,7 @@ class Search extends React.Component {
     sendLoadMoreProductsWithConstraints(){
     
         api.searchLongNameAfterWithConstraints(this.state.search_query, 
-                this.state.first_result + this.state.max_results, this.state.constraints)
+                this.state.first_result + this.state.max_results, this.state.nutrient_constraints)
         .then(data => {
             this.setState({first_result: data['first_result']});
             this.setState({products: this.state.products.concat(data['products'])});
@@ -176,9 +175,9 @@ class Search extends React.Component {
                     </button>
                 </div>
 
-                <Constraints 
+                <NutrientConstraints
                     handleUpdateConstraints={this.handleUpdateConstraints}
-                    constraints={this.state.constraints}
+                    nutrient_constraints={this.state.nutrient_constraints}
                 />
 
                 <div className="results-container">
