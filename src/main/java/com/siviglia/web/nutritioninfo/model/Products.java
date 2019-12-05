@@ -60,6 +60,7 @@ public class Products {
     private Date dateAvailable;
 
     @Column(name="ingredients_english", columnDefinition="MEDIUMTEXT")
+    @FullTextField(analyzer= "english", searchable= Searchable.YES)
     private String ingredientsEnglish;
 
     @Column(name="serving_size")

@@ -49,7 +49,9 @@ public class ProductSearchService {
         return new ProductsDTO(results.getHits(), results.getTotalHitCount());
     }
 
-    public ProductsDTO searchProductsWithConstraints(String text, int maxResults, int firstResult, List<ProductSearchNutrientConstraint> nutrientConstraints){
+    public ProductsDTO searchProductsWithConstraints(String text, int maxResults, int firstResult, 
+            List<ProductSearchNutrientConstraint> nutrientConstraints,
+            List<ProductSearchIngredientConstraint> ingredientsConstraints){
 
         SearchSession searchSession = Search.session( entityManager );
         SearchResult<Products> results = searchSession.search( Products.class )
@@ -75,6 +77,18 @@ public class ProductSearchService {
                         ); 
                     
                     } //end for loop
+
+                    for(ProductSearchIngredientConstraint c : ingredientsConstraints){
+
+                        if(c.getIsIncluded() == true){
+                            b.must( f.match().field("ingredientsEnglish").matching(c.getName()) );     
+                        
+                        } else {
+                            b.must( f.matchAll().except( 
+                                        f.match().field("ingredientsEnglish").matching(c.getName())) );     
+                        }
+                    
+                    }//end for loop
 
                 })).fetch(firstResult, maxResults);
 

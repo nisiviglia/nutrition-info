@@ -32,6 +32,8 @@ import com.siviglia.web.nutritioninfo.repository.ProductSearchService;
 import com.siviglia.web.nutritioninfo.repository.ProductsRepository;
 import com.siviglia.web.nutritioninfo.repository.ProductsDTO;
 import com.siviglia.web.nutritioninfo.repository.ProductSearchNutrientConstraint;
+import com.siviglia.web.nutritioninfo.repository.ProductSearchIngredientConstraint;
+import com.siviglia.web.nutritioninfo.repository.ProductSearchConstraintDTO;
 import com.siviglia.web.nutritioninfo.exception.NotFoundException;
 import com.siviglia.web.nutritioninfo.exception.BadRequestException;
 
@@ -76,6 +78,7 @@ public class SearchController{
     }
 
     @CrossOrigin
+    @SuppressWarnings("unchecked")
     @RequestMapping(value= "/api/v1/search/advanced/name/{name}",
         method= RequestMethod.POST,
         produces= "application/json")
@@ -83,7 +86,7 @@ public class SearchController{
             @PathVariable() String name,
             @RequestParam(name= "first_result", defaultValue="0") int firstResult,
             @RequestParam(name= "max_results", defaultValue="20") int maxResults,
-            @RequestBody List<ProductSearchNutrientConstraint> nutrientConstraints){
+            @RequestBody ProductSearchConstraintDTO constraints){
 
         //Keep max results less than 100.
         if(maxResults > 100){
@@ -91,19 +94,20 @@ public class SearchController{
         }
 
         //dont allow more than 5 constraints
-        if(nutrientConstraints.size() > 5){
+        if(constraints.getNutrientConstraints().size() > 5 || constraints.getIngredientConstrants().size() > 5){
             throw new BadRequestException();
         }
         
         //Grab search results
         ProductsDTO productsDTO = 
             productSearchService.searchProductsWithConstraints(
-                    name, maxResults, firstResult, nutrientConstraints);
+                    name, maxResults, firstResult, constraints.getNutrientConstraints(), constraints.getIngredientConstrants());
         
         //Create json results
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search_query", name);
-        map.put("nutrient_constraints", nutrientConstraints);
+        map.put("nutrient_constraints", constraints.getNutrientConstraints());
+        map.put("ingredient_constraints", constraints.getIngredientConstrants());
         map.put("total_results", productsDTO.getTotalResults() );
         map.put("max_results", maxResults);
         map.put("returned_results", productsDTO.getProducts().size() );
