@@ -3,7 +3,7 @@ import * as dailyValues from '../product/DailyValues';
 
 const NutrientConstraintsCard = props => (
     
-    <div className="constrains-card">
+    <div className="nutrient-constraints-card">
             <select 
                 value={props.data.code} 
                 name="code" 
