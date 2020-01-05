@@ -13,7 +13,7 @@ const IngredientConstraintCard = props => (
             </select>
             <input 
                 type="text" 
-                value={props.data.name} 
+                value={props.data.name || ''} 
                 onChange={(e) => props.handleUpdateConstraint(props.data.id, e)} 
                 name="name" 
                 title="a number from 0 to 9999" 
