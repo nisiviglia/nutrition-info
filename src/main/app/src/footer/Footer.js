@@ -7,11 +7,9 @@ class Footer extends React.Component {
     
         return (
             <div className="footer-container">
-                <p><a href="https://github.com/nisiviglia">{'\u00A9'} 2019 Nicholas Siviglia</a></p>
+                <p><a href="https://github.com/nisiviglia">{'\u00A9'} 2020 Nicholas Siviglia</a></p>
                 <p>{'\u2022'}</p>
                 <Link to="/terms"><p>Terms</p></Link>
-                <p>{'\u2022'}</p>
-                <p><a href="https://www.flaticon.com/authors/egor-rumyantsev"> Free icons made by: Egor Rumyantsev</a></p>
             </div>
         );
     }

@@ -1,0 +1,42 @@
+
+.nutrient-constraints-card {
+    
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-grow: 2;
+    padding-bottom: 0.5em;
+
+}
+
+.nutrient-button {
+    margin-right: 1em;
+}
+
+input[name="amount"] {
+
+    flex-grow: 2;
+    width: 10ch;
+    padding: 0 0 0 5px;
+    border: 1px solid rgba(0,0,0,0.15);
+    -webkit-appearance: none;
+    -moz-appearance:textfield;
+}
+
+input[name="delete"] {
+
+    width: 10%;
+    font-weight: 700;
+    background: RGB(255 132 132);
+    border: none;
+    padding: 0;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+input[name="delete"]:hover {
+
+    border: 1px solid red;
+    outline: none;
+}

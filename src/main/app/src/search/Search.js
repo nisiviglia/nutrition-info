@@ -52,21 +52,20 @@ class Search extends React.Component {
     }
 
     handleSubmit() {
-
         if(this.state.search_query === ''){
             return;
         }
 
-        let ol = Object.keys(this.state.constraints);
+        for(const key in this.state.constraints){
 
-        if(ol.length === 0){
+            if(this.state.constraints[key].length !== 0){
+                this.sendSearchQueryWithConstraints();
+                return;
+            } 
             
-            this.sendSearchQuery();
-        } else {
-        
-            this.sendSearchQueryWithConstraints();
         }
 
+        this.sendSearchQuery();
     }
 
     sendSearchQuery(){
@@ -170,6 +169,7 @@ class Search extends React.Component {
                 <div className="searchbar" >
                     <input type="text" 
                         spellCheck="true" 
+						title="Enter name to search." 
                         value={this.state.search_query} 
                         onChange={this.handleChange} 
                         onKeyPress={this.handleKeyPress}

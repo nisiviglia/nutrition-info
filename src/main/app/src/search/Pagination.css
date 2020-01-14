@@ -1,7 +1,7 @@
 
 .pagination {
     width: 30%;
-    height: 2em;
+    height: 3em;
     margin-top: 5px;
 }
 
@@ -20,7 +20,7 @@
     background-color: #5DBCD2;
 }
 
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 1100px) {
     .pagination {
         width: 55%;
     }

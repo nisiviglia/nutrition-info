@@ -1,4 +1,5 @@
 import React from 'react';
+import './Constraints.css';
 import NutrientConstraintsCard from './NutrientConstraintsCard'
 import IngredientConstraintCard from './IngredientConstraintCard'
 
@@ -18,7 +19,6 @@ class Constraints extends React.Component {
         this.handleAddIngredientConstraint = this.handleAddIngredientConstraint.bind(this);
         this.handleRemoveIngredientConstraint = this.handleRemoveIngredientConstraint.bind(this);
         this.handleUpdateIngredientConstraint = this.handleUpdateIngredientConstraint.bind(this);
-        this.createConstraintsObjectFromState = this.createConstraintsObjectFromState.bind(this);
     }
 
     componentDidMount(){
@@ -44,13 +44,17 @@ class Constraints extends React.Component {
             id: newID,
             code: 1008,
             isInclusiveLower: true,
-            amount: 0
+            amount: ""
         };
         
         let array = Array.from(this.state.nutrients);
         array.push(c);
         this.setState({nutrients: array});
-        this.props.handleUpdateConstraints(this.createConstraintsObjectFromState());
+        let object = {
+            "nutrientConstraints": array,
+            "ingredientConstraints": this.state.ingredients
+        };
+        this.props.handleUpdateConstraints(object);
     }
 
     handleAddIngredientConstraint(event){
@@ -70,7 +74,11 @@ class Constraints extends React.Component {
         let array = Array.from(this.state.ingredients);
         array.push(c);
         this.setState({ingredients: array});
-        this.props.handleUpdateConstraints(this.createConstraintsObjectFromState());
+        let object = {
+            "nutrientConstraints": this.state.nutrients,
+            "ingredientConstraints": array 
+        };
+        this.props.handleUpdateConstraints(object);
     }
 
     handleRemoveNutrientConstraint(id, event){
@@ -81,7 +89,11 @@ class Constraints extends React.Component {
             if(id === array[i].id){
                 array.splice(i, 1);
                 this.setState({nutrients: array});
-                this.props.handleUpdateConstraints(this.createConstraintsObjectFromState());
+                let object = {
+                    "nutrientConstraints": array,
+                    "ingredientConstraints": this.state.ingredients
+                };
+                this.props.handleUpdateConstraints(object);
                 return;
             }
         }
@@ -95,7 +107,11 @@ class Constraints extends React.Component {
             if(id === array[i].id){
                 array.splice(i, 1);
                 this.setState({ingredients: array});
-                this.props.handleUpdateConstraints(this.createConstraintsObjectFromState());
+                let object = {
+                    "nutrientConstraints": this.state.nutrients,
+                    "ingredientConstraints": array 
+                };
+                this.props.handleUpdateConstraints(object);
                 return;
             }
         }
@@ -121,12 +137,16 @@ class Constraints extends React.Component {
                 
                 }
                 else if("amount" === name){
-                    array[i].amount = Number(target.value);
+                    array[i].amount = target.value;
                 
                 }
 
                 this.setState({nutrients: array});
-                this.props.handleUpdateConstraints(this.createConstraintsObjectFromState());
+                let object = {
+                    "nutrientConstraints": array,
+                    "ingredientConstraints": this.state.ingredients
+                };
+                this.props.handleUpdateConstraints(object);
                 return;
             }
         }
@@ -153,27 +173,28 @@ class Constraints extends React.Component {
                 }
 
                 this.setState({ingredients: array});
-                this.props.handleUpdateConstraints(this.createConstraintsObjectFromState());
+                let object = {
+                    "nutrientConstraints": this.state.nutrients,
+                    "ingredientConstraints": array 
+                };
+                this.props.handleUpdateConstraints(object);
                 return;
             }
         }
     
     }
 
-    createConstraintsObjectFromState(){
-        let object = {
-            "nutrientConstraints": this.state.nutrients,
-            "ingredientConstraints": this.state.ingredients
-        };
-
-        return object;
-    }
-
     render() {
         return (
             <div className="constraints-container">
-                <button type="button" onClick={this.handleAddNutrientContraint}>+Nutrient</button> 
-                <button type="button" onClick={this.handleAddIngredientConstraint}>+Ingredient</button> 
+            <fieldset>
+                <legend>Advanced Search</legend>
+                <div className="constraints-container-buttons"> 
+                    <div className="tooltip-right" data-tooltip="Add a nutrient or Ingredient to limit your search to certain foods.">
+                        <button className="nutrient-button" type="button" onClick={this.handleAddNutrientContraint}>Add Nutrient</button> 
+                        <button type="button" className="ingredient-button" onClick={this.handleAddIngredientConstraint}>Add Ingredient</button> 
+                    </div>
+                </div>
                 <div className="constraints-list">
                     {this.state.nutrients.map(c => 
                         <NutrientConstraintsCard
@@ -192,6 +213,7 @@ class Constraints extends React.Component {
                         />
                     )}
                 </div>
+            </fieldset>
             </div>
         );
     }

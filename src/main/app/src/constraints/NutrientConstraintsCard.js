@@ -1,4 +1,5 @@
 import React from 'react';
+import './NutrientConstraintsCard.css';
 import * as dailyValues from '../product/DailyValues'; 
 
 const NutrientConstraintsCard = props => (
@@ -18,20 +19,22 @@ const NutrientConstraintsCard = props => (
                 name="isInclusiveLower" 
                 onChange={(e) => props.handleUpdateConstraint(props.data.id, e)} 
             >
-                <option value={false}>Greater Than</option>
-                <option value={true}>Lower Than</option>
+                <option value={false}>Greater</option>
+                <option value={true}>Lower</option>
             </select>
             <input 
-                type="text" 
+                type="number" 
                 value={props.data.amount} 
                 onChange={(e) => props.handleUpdateConstraint(props.data.id, e)} 
                 pattern="[0-9]{1,4}" 
                 name="amount" 
-                title="a number from 0 to 9999" 
+                title="A number from 0 to 9999." 
+                placeholder="Amount"
             />
             <input 
                 type="submit"  
                 value="X" 
+                name="delete"
                 onClick={(e) => props.handleRemoveConstraint(props.data.id, e)} 
             />
     </div>

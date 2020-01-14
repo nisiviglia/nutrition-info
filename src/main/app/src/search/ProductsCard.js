@@ -15,15 +15,15 @@ const ProductsCard = props => (
         <div className="product-card-body">
             <div className="product-card-body-item">
                 <p>Fat</p>
-                <h4>{props.fat}</h4>
+                <h4>{props.fat} g</h4>
             </div>
             <div className="product-card-body-item">
                 <p>Protien</p>
-                <h4>{props.protien}</h4>
+                <h4>{props.protien} g</h4>
             </div>
             <div className="product-card-body-item">
                 <p>Carbs</p>
-                <h4>{props.carb}</h4>
+                <h4>{props.carb} g</h4>
             </div>
             <div className="product-card-body-item">
                 <p>Calories</p>
