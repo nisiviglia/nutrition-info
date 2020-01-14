@@ -40,7 +40,7 @@ function getNutrient(array, dailyValue, servingSize) {
     if( i !== -1){
 
         if(dailyValue.dailyValue !== -1){
-            percent = array[i].outputValue.toFixed(0) + "%"; 
+            percent = ((array[i].outputValue / dailyValue.dailyValue) * 100).toFixed(0) + "%"; 
         }
         
         if(dailyValue.bold === true){

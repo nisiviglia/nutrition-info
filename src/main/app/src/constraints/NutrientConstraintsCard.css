@@ -27,6 +27,7 @@ input[name="amount"] {
 input[name="delete"] {
 
     width: 10%;
+    min-width: 56px;
     font-weight: 700;
     background: RGB(255 132 132);
     border: none;
