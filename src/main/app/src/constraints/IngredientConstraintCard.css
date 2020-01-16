@@ -6,6 +6,7 @@
     flex-direction: row;
     justify-content: center;
     padding-bottom: 0.5em;
+	height: 2em;
 }
 
 input[name="name"] {
@@ -27,3 +28,8 @@ input[name="delete"] {
     cursor: pointer;
 }
 
+@-moz-document url-prefix() { 
+.ingredient-constraints-card {
+     height: 3em;
+  }
+}
